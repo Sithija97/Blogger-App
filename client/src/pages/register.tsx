@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../routes/router";
+import { BASE_URL } from "../constants";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -15,13 +16,10 @@ export const Register = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:3000/api/auth/register",
-      {
-        username,
-        password,
-      }
-    );
+    const response = await axios.post(`${BASE_URL}/auth/register`, {
+      username,
+      password,
+    });
     if (response.status === 201) {
       navigate(LOGIN);
     }

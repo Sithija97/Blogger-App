@@ -1,10 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROOT } from "../routes/router";
+import { BASE_URL } from "../constants";
+import { userContext } from "../context/user.context";
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { setUserInfo } = useContext(userContext);
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -16,7 +20,7 @@ export const Login = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await axios.post(
-      "http://localhost:3000/api/auth/login",
+      `${BASE_URL}/auth/login`,
       {
         username,
         password,
@@ -25,6 +29,7 @@ export const Login = () => {
     );
     clearInputs();
     if (response.status === 200) {
+      setUserInfo(response.data);
       navigate(ROOT);
     }
   };

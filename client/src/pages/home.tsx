@@ -1,4 +1,4 @@
-import { Post } from "../components/post";
+import { Post } from "../components";
 
 export const Home = () => {
   const tempPosts = 3;

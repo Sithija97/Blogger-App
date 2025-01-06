@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { LOGIN, REGISTER, ROOT } from "../routes/router";
+import { CREATE, LOGIN, REGISTER, ROOT } from "../routes/router";
 import { useContext, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constants";
@@ -40,7 +40,7 @@ export const Header = () => {
       <nav>
         {userInfo ? (
           <>
-            <Link to="/">Create new post</Link>
+            <Link to={CREATE}>Create new post</Link>
             <a onClick={logout}>Logout</a>
           </>
         ) : (

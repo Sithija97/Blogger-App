@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import { CreatePost, Home, Layout, Login, Register } from "../pages";
+import { CreatePost, Home, Layout, Login, Post, Register } from "../pages";
 
 export const ROOT = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
 export const CREATE = "/create";
+export const POST = "/post/:id";
 
 export const router = createBrowserRouter(
   [
@@ -27,6 +28,10 @@ export const router = createBrowserRouter(
         {
           path: CREATE,
           element: <CreatePost />,
+        },
+        {
+          path: POST,
+          element: <Post />,
         },
       ],
     },

@@ -9,8 +9,6 @@ export const Header = () => {
   const navigate = useNavigate();
   const { userInfo, setUserInfo } = useContext(userContext);
 
-  console.log(userInfo);
-
   const getProfile = async () => {
     const response = await axios.get(`${BASE_URL}/auth/profile`, {
       withCredentials: true,

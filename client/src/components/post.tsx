@@ -1,29 +1,34 @@
-type IProps = {
-  index: number;
-};
+import { Link } from "react-router-dom";
+import { ORIGIN_URL } from "../constants";
+import { IPost } from "../pages";
+import { formatISO9075 } from "date-fns";
 
-export const Post = ({ index }: IProps) => {
+export const Post = ({
+  _id,
+  title,
+  summary,
+  cover,
+  author,
+  createdAt,
+}: IPost) => {
   return (
-    <div className="post" key={index}>
+    <div className="post">
       <div className="image">
-        <img
-          src="https://techcrunch.com/wp-content/uploads/2023/11/xAI-Grok-GettyImages-1765893916.jpeg?resize=1200,800"
-          alt=""
-        />
+        <Link to={`/post/${_id}`}>
+          <img src={`${ORIGIN_URL}${cover}`} alt="" />
+        </Link>
       </div>
       <div className="content">
-        <h2>You can now react to messages on Gmail</h2>
+        <Link to={`/post/${_id}`}>
+          <h2>{title}</h2>
+        </Link>
         <p className="info">
           <a href="" className="author">
-            David Beckham
+            {author.username}
           </a>
-          <time>2025-01-03 11:32</time>
+          <time>{formatISO9075(createdAt)}</time>
         </p>
-        <p className="summary">
-          Today at it's special launch event, home backup power giant EcoFlow
-          launched a flurry of new products, including a 'Whole-home Backup
-          Power Solution'
-        </p>
+        <p className="summary">{summary}</p>
       </div>
     </div>
   );

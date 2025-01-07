@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -7,6 +8,8 @@ type IProps = {
 };
 
 export const Editor = ({ value, onChange }: IProps) => {
+  const quillRef = useRef<ReactQuill | null>(null);
+
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -21,9 +24,11 @@ export const Editor = ({ value, onChange }: IProps) => {
       ["clean"],
     ],
   };
+
   return (
     <div className="content">
       <ReactQuill
+        ref={quillRef}
         value={value}
         theme={"snow"}
         onChange={onChange}

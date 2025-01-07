@@ -45,6 +45,12 @@ div.post {
 div.post div.content h2 {
   margin: 0;
   font-size: 1.5rem;
+  text-decoration: none;
+}
+
+div.post div.content a {
+  color: #333;
+  text-decoration: none;
 }
 
 div.post p.info {

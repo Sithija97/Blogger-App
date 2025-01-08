@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ORIGIN_URL } from "../constants";
-import { IPost } from "../pages";
+import { IPost } from "../organisms";
 import { formatISO9075 } from "date-fns";
 
 export const Post = ({

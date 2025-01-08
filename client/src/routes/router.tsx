@@ -1,22 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
-import { CreatePost, Home, Layout, Login, Post, Register } from "../pages";
+import { CreatePost, Home, Login, Post, Register, Profile } from "../organisms";
+import { AuthTemplate, MainTemplate } from "../templates";
 
 export const ROOT = "/";
 export const LOGIN = "/login";
 export const REGISTER = "/register";
 export const CREATE = "/create";
+export const PROFILE = "/profile";
 export const POST = "/post/:id";
 
 export const router = createBrowserRouter(
   [
     {
-      path: ROOT,
-      element: <Layout />,
+      element: <AuthTemplate />,
       children: [
-        {
-          index: true,
-          element: <Home />,
-        },
         {
           path: LOGIN,
           element: <Login />,
@@ -25,6 +22,16 @@ export const router = createBrowserRouter(
           path: REGISTER,
           element: <Register />,
         },
+      ],
+    },
+    {
+      path: ROOT,
+      element: <MainTemplate />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
         {
           path: CREATE,
           element: <CreatePost />,
@@ -32,6 +39,10 @@ export const router = createBrowserRouter(
         {
           path: POST,
           element: <Post />,
+        },
+        {
+          path: PROFILE,
+          element: <Profile />,
         },
       ],
     },

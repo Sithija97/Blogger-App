@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Editor } from "../components";
+import { Editor } from "../molecules";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../constants";
 import { ROOT } from "../routes/router";

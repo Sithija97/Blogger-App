@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Post } from "../components";
+import { Header, Post } from "../molecules";
 import { BASE_URL } from "../constants";
 import { useEffect, useState } from "react";
 
@@ -22,19 +22,18 @@ export type IPost = {
 export const Home = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
 
-  const fetschPosts = async () => {
+  const fetchPosts = async () => {
     const response = await axios.get(`${BASE_URL}/posts`);
     if (response.status === 200) setPosts(response.data);
   };
 
   useEffect(() => {
-    fetschPosts();
+    fetchPosts();
   }, []);
 
   return (
     <div>
-      {posts.length > 0 &&
-        posts.map((post, index) => <Post key={index} {...post} />)}
+      <Header />
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import { ROOT } from "../routes/router";
+import { RedirectLink } from "../attoms";
 
 export const Header = () => {
   return (
-    <div className="h-full flex items-center justify-center flex-col">
+    <div className="my-4 flex items-center justify-center flex-col">
       <div className="text-4xl flex flex-col  w-full items-start">
         <h1 className="font-semibold">Hey I am Lorem ipsum !</h1>
         <h2>Discover new blogs of technology and trends.</h2>
@@ -25,12 +25,7 @@ export const Header = () => {
             consectetur obcaecati voluptatum corporis iure illum sapiente, ab
             corrupti asperiores doloremque.
           </p>
-          <Link
-            to={ROOT}
-            className="mt-2 bg-blue-600 hover:bg-blue-700 transition-all duration-300 px-4 py-2 rounded text-white"
-          >
-            Read Blog
-          </Link>
+          <RedirectLink link={ROOT} title="Read More" customStyles="mt-2" />
         </div>
       </div>
     </div>

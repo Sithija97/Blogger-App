@@ -2,6 +2,8 @@ import axios from "axios";
 import { Header, Post } from "../molecules";
 import { BASE_URL } from "../constants";
 import { useEffect, useState } from "react";
+import { Categories } from "./categories";
+import { RecentBlogs } from "./recent";
 
 type IAuthor = {
   _id: string;
@@ -20,20 +22,11 @@ export type IPost = {
 };
 
 export const Home = () => {
-  const [posts, setPosts] = useState<IPost[]>([]);
-
-  const fetchPosts = async () => {
-    const response = await axios.get(`${BASE_URL}/posts`);
-    if (response.status === 200) setPosts(response.data);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
   return (
-    <div>
+    <>
       <Header />
-    </div>
+      <Categories />
+      <RecentBlogs />
+    </>
   );
 };

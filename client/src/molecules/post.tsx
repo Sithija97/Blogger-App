@@ -1,35 +1,23 @@
-import { Link } from "react-router-dom";
-import { ORIGIN_URL } from "../constants";
-import { IPost } from "../organisms";
-import { formatISO9075 } from "date-fns";
+import { RedirectLink } from "../attoms";
+import { ROOT } from "../routes/router";
 
-export const Post = ({
-  _id,
-  title,
-  summary,
-  cover,
-  author,
-  createdAt,
-}: IPost) => {
+type IProps = {
+  img: string;
+  title: string;
+  description: string;
+};
+
+export const Post = ({ img, title, description }: IProps) => {
   return (
-    <div className="post">
-      <div className="image">
-        <Link to={`/post/${_id}`}>
-          <img src={`${ORIGIN_URL}${cover}`} alt="" />
-        </Link>
+    <>
+      <div className="w-full lg:w-2/6">
+        <img src={img} alt="" className="rounded object-cover" />
       </div>
-      <div className="content">
-        <Link to={`/post/${_id}`}>
-          <h2>{title}</h2>
-        </Link>
-        <p className="info">
-          <a href="" className="author">
-            {author.username}
-          </a>
-          <time>{formatISO9075(createdAt)}</time>
-        </p>
-        <p className="summary">{summary}</p>
+      <div className="w-full lg:w-4/6">
+        <h1 className="text-2xl font-semibold">{title}</h1>
+        <p className="mb-4">{description.slice(0, 400)}...</p>
+        <RedirectLink link={ROOT} title="Read Blog" />
       </div>
-    </div>
+    </>
   );
 };

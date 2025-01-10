@@ -1,37 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
-import { CREATE, LOGIN, PROFILE, REGISTER, ROOT } from "../routes/router";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL } from "../constants";
-import { userContext } from "../context/user.context";
+import { Link } from "react-router-dom";
+import { LOGIN, PROFILE, ROOT } from "../routes/router";
+import { useState } from "react";
+
 import { IoClose, IoReorderThree } from "react-icons/io5";
 
-export const Navbar = () => {
-  const navigate = useNavigate();
-  const [mobileNav, setMobileNav] = useState<boolean>(false);
-  const { userInfo, setUserInfo } = useContext(userContext);
-
-  const getProfile = async () => {
-    const response = await axios.get(`${BASE_URL}/auth/profile`, {
-      withCredentials: true,
-    });
-    setUserInfo(response.data);
-  };
-
-  const logout = async () => {
-    const response = await axios.get(`${BASE_URL}/auth/logout`, {
-      withCredentials: true,
-    });
-    if (response.status === 200) {
-      setUserInfo("");
-      navigate(LOGIN);
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
+const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
   const links = [
     {
       name: "Home",
@@ -50,6 +23,23 @@ export const Navbar = () => {
       to: LOGIN,
     },
   ];
+  return (
+    <>
+      {links.map((link, index) => (
+        <Link
+          className={`hover:text-blue-600 transition-all duration-300 ${customStyles}`}
+          key={index}
+          to={link.to}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </>
+  );
+};
+
+export const Navbar = () => {
+  const [mobileNav, setMobileNav] = useState<boolean>(false);
 
   const handleMobileNav = () => setMobileNav(!mobileNav);
 
@@ -62,15 +52,7 @@ export const Navbar = () => {
           </Link>
         </div>
         <div className="w-3/6 lg:w-2/6 hidden lg:flex items-center justify-end">
-          {links.map((link, index) => (
-            <Link
-              className="ms-4 hover:text-blue-600 transition-all duration-300"
-              key={index}
-              to={link.to}
-            >
-              {link.name}
-            </Link>
-          ))}
+          <LinksContainer customStyles="ms-4" />
         </div>
         <div className="w-3/6 flex lg:hidden items-center justify-end">
           <button className="text-3xl" onClick={handleMobileNav}>
@@ -89,7 +71,9 @@ export const Navbar = () => {
               <IoClose />
             </button>
           </div>
-          <div></div>
+          <div className="h-full flex flex-col items-center justify-center">
+            <LinksContainer customStyles="mb-8 text-3xl" />
+          </div>
         </div>
       </nav>
     </header>

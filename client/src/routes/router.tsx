@@ -1,13 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
-import { CreatePost, Home, Login, Register, Profile } from "../organisms";
-import { AuthTemplate, MainTemplate } from "../templates";
+import { AllBlogs, Home, Profile, SignIn, SignUp } from "../templates";
+import { AuthTemplate, MainTemplate } from "../pages";
 
 export const ROOT = "/";
-export const LOGIN = "/login";
-export const REGISTER = "/register";
+export const LOGIN = "/sign-in";
+export const REGISTER = "/sign-up";
 export const CREATE = "/create";
 export const PROFILE = "/profile";
+export const FAVOURITES = "/profile/favourites";
+export const LIKED_BLOGS = "/profile/liked-blogs";
 export const POST = "/post/:id";
+export const ALL_BLOGS = "/all-blogs";
 
 export const router = createBrowserRouter([
   {
@@ -15,11 +18,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: LOGIN,
-        element: <Login />,
+        element: <SignIn />,
       },
       {
         path: REGISTER,
-        element: <Register />,
+        element: <SignUp />,
       },
     ],
   },
@@ -32,8 +35,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: CREATE,
-        element: <CreatePost />,
+        path: ALL_BLOGS,
+        element: <AllBlogs />,
       },
       // {
       //   path: POST,

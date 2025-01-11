@@ -1,13 +1,16 @@
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/router";
-import { UserContextProvider } from "./context/user.provider";
 import "./App.css";
 
 function App() {
   return (
-    <UserContextProvider>
+    <section
+      className={`${
+        import.meta.env.VITE_DEV_ENV === "development" ? "debug-screens" : ""
+      }`}
+    >
       <RouterProvider router={router} />
-    </UserContextProvider>
+    </section>
   );
 }
 

@@ -8,7 +8,7 @@ type IProps = {
 export const SectionTemplate = ({ title, children }: IProps) => {
   return (
     <div className="mb-4 py-4">
-      <h1 className="text-xl font-semibold mb-4">{title}</h1>
+      <h6 className="text-sm font-semibold mb-4">{title}</h6>
       {children}
     </div>
   );

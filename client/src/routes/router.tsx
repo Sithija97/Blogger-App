@@ -1,5 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AllBlogs, Home, Profile, SignIn, SignUp } from "../templates";
+import {
+  Admin,
+  AdminAddPosts,
+  AdminDashboard,
+  AdminEditPosts,
+  AdminSignIn,
+  AllPosts,
+  Categories,
+  Dashboard,
+  Favourites,
+  Home,
+  LikedPosts,
+  Post,
+  Profile,
+  SignIn,
+  SignUp,
+} from "../templates";
 import { AuthTemplate, MainTemplate } from "../pages";
 
 export const ROOT = "/";
@@ -8,9 +24,14 @@ export const REGISTER = "/sign-up";
 export const CREATE = "/create";
 export const PROFILE = "/profile";
 export const FAVOURITES = "/profile/favourites";
-export const LIKED_BLOGS = "/profile/liked-blogs";
+export const LIKED_BLOGS = "/profile/liked-posts";
 export const POST = "/post/:id";
-export const ALL_BLOGS = "/all-blogs";
+export const ALL_BLOGS = "/all-posts";
+export const CATEGORY = "/categories/:category";
+export const ADMIN = "/admin";
+export const ADMIN_LOGIN = "/admin/sign-in";
+export const ADMIN_ADD_POSTS = "/admin/add-blogs";
+export const ADMIN_EDIT_POSTS = "/admin/edit-blogs";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +45,10 @@ export const router = createBrowserRouter([
         path: REGISTER,
         element: <SignUp />,
       },
+      {
+        path: ADMIN_LOGIN,
+        element: <AdminSignIn />,
+      },
     ],
   },
   {
@@ -36,15 +61,33 @@ export const router = createBrowserRouter([
       },
       {
         path: ALL_BLOGS,
-        element: <AllBlogs />,
+        element: <AllPosts />,
       },
-      // {
-      //   path: POST,
-      //   element: <Post />,
-      // },
+      {
+        path: POST,
+        element: <Post />,
+      },
+      {
+        path: CATEGORY,
+        element: <Categories />,
+      },
       {
         path: PROFILE,
         element: <Profile />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: FAVOURITES, element: <Favourites /> },
+          { path: LIKED_BLOGS, element: <LikedPosts /> },
+        ],
+      },
+      {
+        path: ADMIN,
+        element: <Admin />,
+        children: [
+          { index: true, element: <AdminDashboard /> },
+          { path: ADMIN_ADD_POSTS, element: <AdminAddPosts /> },
+          { path: ADMIN_EDIT_POSTS, element: <AdminEditPosts /> },
+        ],
       },
     ],
   },

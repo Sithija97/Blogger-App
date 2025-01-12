@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Badge } from "../attoms";
 import { SectionTemplate } from "../templates";
 
@@ -16,10 +17,15 @@ export const Categories = () => {
     { label: "Trending Topics", color: "purple" },
   ];
   return (
-    <SectionTemplate title="Recommended topics">
+    <SectionTemplate
+      title="Recommended topics"
+      customStyles="border-l border-[#F2F2F2] h-full pr-6 pl-10"
+    >
       {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4"> */}
       {categories.map((category, index) => (
-        <Badge key={index} label={category.label} />
+        <Link to={`/categories/${category.label}`}>
+          <Badge key={index} label={category.label} />
+        </Link>
       ))}
     </SectionTemplate>
   );

@@ -10,7 +10,7 @@ export const MainTemplate = () => {
           <Outlet />
         </div>
       </main> */}
-      <main className="max-w-[1336px] calc(h-screen-[57px]) m-auto">
+      <main className="max-w-[1336px] h-[calc(100vh-57px)] overflow-hidden m-auto">
         <Outlet />
       </main>
     </>

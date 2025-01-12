@@ -1,4 +1,3 @@
-import { Header } from "../molecules";
 import { Categories, RecentBlogs } from "../organisms";
 
 type IAuthor = {
@@ -19,7 +18,7 @@ export type IPost = {
 
 export const Home = () => {
   return (
-    <div className="flex justify-evenly">
+    <div className="flex justify-evenly h-full">
       {/* <Header /> */}
       {/* <Categories /> */}
       {/* <RecentBlogs /> */}
@@ -29,7 +28,7 @@ export const Home = () => {
       <div className="h-full bg-slate-400 min-w-[368px] max-w-[368px]">
         side
       </div> */}
-      <section className="h-full min-w-[728px] max-w-[728px]">
+      <section className="h-full min-w-[728px] max-w-[728px] overflow-y-auto">
         <RecentBlogs />
       </section>
       <section className="h-full min-w-[368px] max-w-[368px] px-[24px]">

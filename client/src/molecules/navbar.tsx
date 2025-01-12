@@ -11,7 +11,7 @@ const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
       to: ROOT,
     },
     {
-      name: "Blogs",
+      name: "Posts",
       to: ALL_BLOGS,
     },
     {

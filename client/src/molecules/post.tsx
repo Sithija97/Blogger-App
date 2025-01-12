@@ -1,18 +1,21 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ALL_BLOGS } from "../routes/router";
 
 type IProps = {
+  _id: string;
   img: string;
   title: string;
   description: string;
 };
 
-export const Post = ({ img, title, description }: IProps) => {
+export const Post = ({ _id, img, title, description }: IProps) => {
   const location = useLocation();
   return (
     <>
       <div className="w-full lg:w-4/6 max-h-40 border-b border-[#F2F2F2]">
-        <h1 className="text-lg font-extrabold">{title}</h1>
+        <Link to={`/post/${_id}`}>
+          <h1 className="text-lg font-extrabold">{title}</h1>
+        </Link>
         <p className="pt-2 mb-4 text-sm text-slate-700">
           {description.slice(0, 200)}...
         </p>

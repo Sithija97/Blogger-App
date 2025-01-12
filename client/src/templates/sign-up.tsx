@@ -51,7 +51,7 @@ export const SignUp = () => {
               <input
                 id="username"
                 name="username"
-                type="username"
+                type="text"
                 required
                 value={inputs.username}
                 onChange={handleChange}

@@ -3,7 +3,7 @@ import { Document, model, Schema } from "mongoose";
 import { USER_ROLES } from "../enums";
 import { IUser } from "../interfaces";
 
-interface IUserModel extends IUser, Document {}
+export interface IUserModel extends IUser, Document {}
 
 const UserSchema = new Schema<IUserModel>(
   {

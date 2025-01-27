@@ -24,18 +24,11 @@ app.use(cookieParser());
 when a request is made to the /uploads route. */
 // app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
-// immediately invoked function
-(async function startup() {
-  try {
-    conncetDB();
-    registerRoutes(app);
+conncetDB();
+registerRoutes(app);
 
-    app.use(errorHandler);
+app.use(errorHandler);
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.log(`Could not make a connection to the database : ${error}`);
-  }
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

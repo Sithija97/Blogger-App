@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { TOKEN } from "../config";
 import { IUser } from "../interfaces";
-import { login, register } from "../services";
+import { check, login, register } from "../services";
 
 export const handleRegister = asyncHandler(
   async (req: Request, res: Response) => {
@@ -32,3 +32,10 @@ export const handleLogout = asyncHandler(
       .json({ message: "Logged out successfully." });
   }
 );
+
+export const checkCookie = asyncHandler(async (req: Request, res: Response) => {
+  const isLoggedIn = check(req);
+
+  if (!isLoggedIn) res.status(404).json({ message: "not logged in." });
+  res.status(200).json({ message: "logged in." });
+});

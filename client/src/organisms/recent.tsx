@@ -53,7 +53,7 @@ export const RecentBlogs = () => {
       <div className="flex flex-col gap-8 lg:gap-4 2xl:gap-6">
         {data.map((item, index) => (
           <div key={index} className="flex flex-col lg:flex-row gap-2 lg:gap-4">
-            <Post {...item} />
+            <Post key={index} {...item} />
           </div>
         ))}
       </div>

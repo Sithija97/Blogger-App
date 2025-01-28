@@ -1,8 +1,17 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { REGISTER } from "../routes/router";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { REGISTER, ROOT } from "../routes/router";
+import { RootState, useAppDispatch, useAppSelector } from "../store";
+import { loginUser } from "../store/auth.slice";
+import { LoadingStates } from "../enums";
 
 export const SignIn = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { loginUserSuccess, loginUserStatus } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
+
   const initialState = {
     email: "",
     password: "",
@@ -17,8 +26,12 @@ export const SignIn = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputs);
+    await dispatch(loginUser(inputs));
   };
+
+  useEffect(() => {
+    if (loginUserSuccess) navigate(ROOT);
+  }, [navigate, loginUserSuccess]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -90,9 +103,12 @@ export const SignIn = () => {
           <div>
             <button
               type="submit"
+              disabled={loginUserStatus === LoadingStates.LOADING}
               className="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             >
-              Sign in
+              {loginUserStatus === LoadingStates.LOADING
+                ? "Signing in"
+                : "Sign in"}
             </button>
           </div>
         </form>

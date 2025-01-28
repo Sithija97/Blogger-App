@@ -23,7 +23,7 @@ export const Categories = () => {
     >
       {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4"> */}
       {categories.map((category, index) => (
-        <Link to={`/categories/${category.label}`}>
+        <Link key={index} to={`/categories/${category.label}`}>
           <Badge key={index} label={category.label} />
         </Link>
       ))}

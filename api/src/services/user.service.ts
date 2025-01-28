@@ -3,7 +3,8 @@ import { IUser } from "../interfaces";
 import User, { IUserModel } from "../models/user";
 import CustomError from "../utils/error.util";
 import jwt from "jsonwebtoken";
-import { SECRET } from "../config";
+import { SECRET, TOKEN } from "../config";
+import { Request } from "express";
 
 export const register = async (user: IUser): Promise<IUserModel> => {
   const { username, email } = user;
@@ -46,5 +47,19 @@ export const login = async (credentials: {
   } catch (error) {
     if (error instanceof CustomError) throw error;
     throw new Error("Unexpected error during logging.");
+  }
+};
+
+export const check = (req: Request) => {
+  try {
+    const token = req.cookies[TOKEN];
+    if (!token) {
+      console.error("Token not found");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    if (error instanceof CustomError) throw error;
+    throw new Error("Internal server error.");
   }
 };

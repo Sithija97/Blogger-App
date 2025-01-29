@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { logger } from "./middleware/logger";
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler } from "./middleware";
 import { conncetDB } from "./config/db";
 import { registerRoutes } from "./routes";
 import { CLIENT_URL, PORT } from "./config";

@@ -19,7 +19,7 @@ const register = async (user: RegisterUserPayload) => {
 };
 
 const logout = async () => {
-  await axios.get(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {
+  await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/logout`, {
     withCredentials: true,
   });
 };

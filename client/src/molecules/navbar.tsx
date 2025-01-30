@@ -4,13 +4,9 @@ import { useState } from "react";
 import { IoClose, IoReorderThree } from "react-icons/io5";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { logoutUser } from "../store/auth.slice";
+import { AuthButtonToggle } from "./auh-button-section";
 
 const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector(
-    (state: RootState) => state.authentication.isAuthenticated
-  );
   const links = [
     {
       name: "Home",
@@ -26,11 +22,6 @@ const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
     },
   ];
 
-  const logout = () => {
-    dispatch(logoutUser());
-    navigate(LOGIN);
-  };
-
   return (
     <>
       {links.map((link, index) => (
@@ -42,21 +33,7 @@ const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
           {link.name}
         </Link>
       ))}
-      {isAuthenticated ? (
-        <button
-          className={`hover:text-slate-600 transition-all duration-300 ${customStyles}`}
-          onClick={logout}
-        >
-          Logout
-        </button>
-      ) : (
-        <Link
-          className={`hover:text-slate-600 transition-all duration-300 ${customStyles}`}
-          to={LOGIN}
-        >
-          Sign in
-        </Link>
-      )}
+      <AuthButtonToggle styles={customStyles} />
     </>
   );
 };

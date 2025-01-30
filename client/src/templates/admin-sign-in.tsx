@@ -17,7 +17,6 @@ export const AdminSignIn = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputs);
   };
 
   return (

@@ -33,7 +33,6 @@ const verifyToken = asyncHandler(
       throw new Error("User not found");
     }
 
-    // console.log("user :", user);
     req.user = user;
     next();
   }

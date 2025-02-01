@@ -11,6 +11,12 @@ export type RegisterUserPayload = {
   password: string;
 };
 
+export type ChangePasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
+
 export type IUser = {
   _id: string;
   username: string;
@@ -32,4 +38,7 @@ export type IAuthState = {
   registerUserStatus: string;
   registerUserSuccess: boolean;
   registerUserError: boolean;
+  changeUserPasswordStatus: string;
+  changeUserPasswordSuccess: boolean;
+  changeUserPasswordError: boolean;
 };

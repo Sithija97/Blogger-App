@@ -1,5 +1,9 @@
 import axios from "axios";
-import { LoginUserPayload, RegisterUserPayload } from "../models";
+import {
+  ChangePasswordPayload,
+  LoginUserPayload,
+  RegisterUserPayload,
+} from "../models";
 
 const login = async (user: LoginUserPayload) => {
   const response = await axios.post(
@@ -24,9 +28,20 @@ const logout = async () => {
   });
 };
 
+const changePassword = async (payload: ChangePasswordPayload) => {
+  await axios.patch(
+    `${import.meta.env.VITE_BASE_URL}/auth/change-password`,
+    payload,
+    {
+      withCredentials: true,
+    }
+  );
+};
+
 const userService = {
   login,
   register,
   logout,
+  changePassword,
 };
 export default userService;

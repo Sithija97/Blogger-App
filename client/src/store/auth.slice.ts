@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  ChangePasswordPayload,
   IAuthState,
   IUser,
   LoginUserPayload,
@@ -20,6 +21,9 @@ const initialState: IAuthState = {
   registerUserStatus: LoadingStates.IDLE,
   registerUserSuccess: false,
   registerUserError: false,
+  changeUserPasswordStatus: LoadingStates.IDLE,
+  changeUserPasswordSuccess: false,
+  changeUserPasswordError: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -51,6 +55,17 @@ export const logoutUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       userService.logout();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const changeUserPassword = createAsyncThunk(
+  "auth/change-password",
+  async (payload: ChangePasswordPayload, thunkAPI) => {
+    try {
+      await userService.changePassword(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -93,7 +108,7 @@ const AuthSlice = createSlice({
         state.registerUserError = true;
       })
 
-      // logout reducers
+      // logout
       .addCase(logoutUser.pending, (state) => {
         state.logoutUserStatus = LoadingStates.LOADING;
         state.logoutUserError = false;
@@ -106,9 +121,23 @@ const AuthSlice = createSlice({
       .addCase(logoutUser.rejected, (state) => {
         state.logoutUserStatus = LoadingStates.FAILURE;
         state.logoutUserError = true;
+      })
+
+      // change password
+      .addCase(changeUserPassword.pending, (state) => {
+        state.changeUserPasswordStatus = LoadingStates.LOADING;
+        state.changeUserPasswordError = false;
+      })
+      .addCase(changeUserPassword.fulfilled, (state) => {
+        state.changeUserPasswordSuccess = true;
+        state.changeUserPasswordStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(changeUserPassword.rejected, (state) => {
+        state.changeUserPasswordStatus = LoadingStates.FAILURE;
+        state.changeUserPasswordError = true;
       });
   },
 });
 
-// export const {} = AuthSlice.actions
+// export const {  } = AuthSlice.actions;
 export default AuthSlice.reducer;

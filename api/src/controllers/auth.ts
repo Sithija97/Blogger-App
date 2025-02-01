@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { TOKEN } from "../config";
 import { IUser } from "../interfaces";
-import { check, login, register } from "../services";
+import { changePassword, check, login, register } from "../services";
 
 export const handleRegister = asyncHandler(
   async (req: Request, res: Response) => {
@@ -39,3 +39,26 @@ export const checkCookie = asyncHandler(async (req: Request, res: Response) => {
   if (!isLoggedIn) res.status(404).json({ message: "not logged in." });
   res.status(200).json({ message: "logged in." });
 });
+
+export const getUserById = asyncHandler(async (req: Request, res: Response) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Not authenticated");
+  }
+  res.status(200).json(req.user);
+});
+
+export const handleChangePassword = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    const result = await changePassword(
+      req,
+      currentPassword,
+      newPassword,
+      confirmNewPassword
+    );
+
+    res.status(200).json(result);
+  }
+);

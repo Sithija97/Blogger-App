@@ -26,7 +26,7 @@ const verifyToken = asyncHandler(
     }
 
     const decoded = jwt.verify(token, SECRET!) as JwtPayload;
-    const user = await User.findById(decoded.id).select("-password");
+    const user = await User.findById(decoded.id);
 
     if (!user) {
       res.status(404);

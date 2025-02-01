@@ -22,6 +22,10 @@ authRoutes.route("/check").get(checkCookie);
 authRoutes.route("/profile").get(authMiddleware.verifyToken, getUserById);
 authRoutes
   .route("/change-password")
-  .patch(authMiddleware.verifyToken, handleChangePassword);
+  .patch(
+    authMiddleware.verifyToken,
+    validate(Schemas.user.changePassword),
+    handleChangePassword
+  );
 
 export default authRoutes;

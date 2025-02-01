@@ -80,59 +80,38 @@ export const changePassword = async (
   confirmNewPassword: string
 ) => {
   try {
-    // 1. Input Validation
-    if (!currentPassword || !newPassword || !confirmNewPassword) {
-      throw new CustomError("All fields are required", 400);
+    // Validate password requirements in a single block
+    switch (true) {
+      case newPassword !== confirmNewPassword:
+        throw new CustomError(
+          "New password and confirm password do not match",
+          400
+        );
+      case newPassword === currentPassword:
+        throw new CustomError(
+          "New password must be different from current password",
+          400
+        );
     }
 
-    if (newPassword !== confirmNewPassword) {
-      throw new CustomError(
-        "New password and confirm password do not match",
-        400
-      );
-    }
-
-    // if (newPassword.length < 8) {
-    //   // Example minimum length
-    //   throw new CustomError(
-    //     "New password must be at least 8 characters long",
-    //     400
-    //   );
-    // }
-
-    if (newPassword === currentPassword) {
-      throw new CustomError(
-        "New password must be different from current password",
-        400
-      );
-    }
-
-    // 2. Authentication (Verify current password)
-    const user = await User.findById(req?.user?._id); // Assumes you have middleware to add user info to req.user
-    console.log("req.user._id:", req?.user?._id); // Log the ID from the request
-    console.log("User found:", user); // Log the entire user object
+    const user = await User.findById(req?.user?._id);
     if (!user) {
-      throw new CustomError("User not found", 404); // Or perhaps a 401 if authentication is the issue
+      throw new CustomError("User not found", 404);
     }
-    console.log("User _id from database:", user._id); // Log the ID from the retrieved user
 
     const validPassword = await bcrypt.compare(currentPassword, user.password);
     if (!validPassword) {
-      throw new CustomError("Incorrect current password", 401); // 401 Unauthorized is more appropriate here
+      throw new CustomError("Incorrect current password", 401);
     }
 
     user.password = newPassword;
     await user.save();
 
-    return { message: "Password changed successfully" }; //  Return a success message
+    return { message: "Password changed successfully" };
   } catch (error: any) {
     if (error instanceof CustomError) {
-      throw error; // Re-throw custom errors
-    } else if (error.name === "ValidationError") {
-      // Mongoose validation errors
-      throw new CustomError(error.message, 400);
+      throw error;
     }
-    console.error("Error changing password:", error); // Log the error for debugging
-    throw new Error("Unexpected error during password change."); // Generic error for other unexpected errors
+    throw new Error("Unexpected error during password change.");
   }
 };

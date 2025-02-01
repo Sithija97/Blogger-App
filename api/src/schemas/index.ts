@@ -1,8 +1,9 @@
-import { createSchema, loginSchema } from "./user";
+import { changePasswordSchema, createSchema, loginSchema } from "./user";
 
 export const Schemas = {
   user: {
     create: createSchema,
     login: loginSchema,
+    changePassword: changePasswordSchema,
   },
 };

@@ -2,7 +2,13 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { TOKEN } from "../config";
 import { IUser } from "../interfaces";
-import { changePassword, check, login, register } from "../services";
+import {
+  changeAvatar,
+  changePassword,
+  check,
+  login,
+  register,
+} from "../services";
 
 export const handleRegister = asyncHandler(
   async (req: Request, res: Response) => {
@@ -59,6 +65,14 @@ export const handleChangePassword = asyncHandler(
       confirmNewPassword
     );
 
+    res.status(200).json(result);
+  }
+);
+
+export const handleChangeAvatar = asyncHandler(
+  async (req: Request, res: Response) => {
+    console.log(req.file);
+    const result = await changeAvatar(req);
     res.status(200).json(result);
   }
 );

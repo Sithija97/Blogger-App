@@ -6,10 +6,12 @@ import {
   checkCookie,
   getUserById,
   handleChangePassword,
+  handleChangeAvatar,
 } from "../controllers";
 import { validate } from "../middleware";
 import { Schemas } from "../schemas";
 import authMiddleware from "../middleware/auth.middleware";
+import upload from "../middleware/image.middleware";
 
 const authRoutes = express.Router();
 
@@ -22,10 +24,13 @@ authRoutes.route("/check").get(checkCookie);
 authRoutes.route("/profile").get(authMiddleware.verifyToken, getUserById);
 authRoutes
   .route("/change-password")
-  .patch(
+  .put(
     authMiddleware.verifyToken,
     validate(Schemas.user.changePassword),
     handleChangePassword
   );
+authRoutes
+  .route("/change-avatar")
+  .put(authMiddleware.verifyToken, upload.single("image"), handleChangeAvatar);
 
 export default authRoutes;

@@ -16,6 +16,7 @@ const UserSchema = new Schema<IUserModel>(
       default: USER_ROLES.USER,
       enum: [USER_ROLES.USER, USER_ROLES.ADMIN],
     },
+    avatar: { type: String },
   },
   {
     timestamps: true,

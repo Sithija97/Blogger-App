@@ -14,16 +14,7 @@ export const register = async (user: IUser): Promise<IUserModel> => {
     if (isExists)
       throw new CustomError("User already exists with this email", 409);
 
-    // 1. Hash the password:
-    const salt = await bcrypt.genSalt(10); // Generate a salt
-    const hashedPassword = await bcrypt.hash(password, salt); // Hash the password
-
-    // 2. Create a *new* user object with the hashed password:
-    const newUser = new User({
-      ...user, // Spread the existing user properties
-      password: hashedPassword, // Override the plain text password with the hash
-    });
-
+    const newUser = new User({ username, email, password });
     return await newUser.save();
   } catch (error) {
     if (error instanceof CustomError) throw error;
@@ -96,22 +87,42 @@ export const changePassword = async (
 
     const user = await User.findById(req?.user?._id);
     if (!user) {
-      throw new CustomError("User not found", 404);
+      throw new CustomError("User not found.", 404);
     }
 
     const validPassword = await bcrypt.compare(currentPassword, user.password);
     if (!validPassword) {
-      throw new CustomError("Incorrect current password", 401);
+      throw new CustomError("Incorrect current password.", 401);
     }
 
     user.password = newPassword;
     await user.save();
 
-    return { message: "Password changed successfully" };
+    return { message: "Password changed successfully." };
   } catch (error: any) {
     if (error instanceof CustomError) {
       throw error;
     }
     throw new Error("Unexpected error during password change.");
+  }
+};
+
+export const changeAvatar = async (req: Request) => {
+  try {
+    const { user } = req;
+    if (!req.file) throw new CustomError("No image file uploaded", 400);
+
+    if (!user) throw new CustomError("User not found.", 404);
+
+    user.avatar = req.file.path;
+    await user.save();
+
+    const { password: _, ...userWithoutPassword } = user.toObject();
+    return userWithoutPassword;
+  } catch (error) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
+    throw new Error("Unexpected error during avatar change.");
   }
 };

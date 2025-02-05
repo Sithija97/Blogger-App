@@ -24,6 +24,9 @@ const initialState: IAuthState = {
   changeUserPasswordStatus: LoadingStates.IDLE,
   changeUserPasswordSuccess: false,
   changeUserPasswordError: false,
+  changeUserAvatarStatus: LoadingStates.IDLE,
+  changeUserAvatarSuccess: false,
+  changeUserAvatarError: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -66,6 +69,18 @@ export const changeUserPassword = createAsyncThunk(
   async (payload: ChangePasswordPayload, thunkAPI) => {
     try {
       await userService.changePassword(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const changeUserAvatar = createAsyncThunk(
+  "auth/change-avatar",
+  async (payload: FormData, thunkAPI) => {
+    try {
+      const response = await userService.changeAvatar(payload);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -135,6 +150,21 @@ const AuthSlice = createSlice({
       .addCase(changeUserPassword.rejected, (state) => {
         state.changeUserPasswordStatus = LoadingStates.FAILURE;
         state.changeUserPasswordError = true;
+      })
+
+      // change avatar
+      .addCase(changeUserAvatar.pending, (state) => {
+        state.changeUserAvatarStatus = LoadingStates.LOADING;
+        state.changeUserAvatarError = false;
+      })
+      .addCase(changeUserAvatar.fulfilled, (state, action) => {
+        state.changeUserAvatarSuccess = true;
+        state.loggedInUser = action.payload;
+        state.changeUserAvatarStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(changeUserAvatar.rejected, (state) => {
+        state.changeUserAvatarStatus = LoadingStates.FAILURE;
+        state.changeUserAvatarError = true;
       });
   },
 });

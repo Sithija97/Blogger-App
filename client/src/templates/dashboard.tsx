@@ -1,8 +1,12 @@
 import { RiProfileLine } from "@remixicon/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { ChangePasswordPayload } from "../models";
-import { changeUserPassword, logoutUser } from "../store/auth.slice";
+import {
+  changeUserAvatar,
+  changeUserPassword,
+  logoutUser,
+} from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { LoadingStates } from "../enums";
 import { LOGIN } from "../routes/router";
@@ -21,6 +25,9 @@ export const Dashboard = () => {
   };
 
   const [passwords, setPasswords] = useState(initialState);
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,11 +44,41 @@ export const Dashboard = () => {
     navigate(LOGIN);
   };
 
+  const handleImageClick = () => fileInputRef.current?.click();
+
+  const profileImageSrc = image
+    ? URL.createObjectURL(image)
+    : loggedInUser?.avatar
+    ? imageUrl
+    : "";
+
   useEffect(() => {
     if (changeUserPasswordSuccess) {
       logout();
     }
   }, [changeUserPasswordSuccess]);
+
+  useEffect(() => {
+    if (loggedInUser?.avatar) {
+      setImageUrl(loggedInUser?.avatar);
+    }
+  }, []);
+
+  const handleImageUpload = (event: any) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setImageUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleAvatarUpdate = async () => {
+    const formData = new FormData();
+    if (image) {
+      formData.append("image", image);
+      dispatch(changeUserAvatar(formData));
+    }
+  };
 
   return (
     <div className="w-full h-full">
@@ -122,7 +159,11 @@ export const Dashboard = () => {
             <div className="mt-12">
               <button
                 type="submit"
-                className="bg-black text-white text-sm rounded-md px-4 py-2"
+                disabled={
+                  passwords.newPassword === "" ||
+                  passwords.confirmNewPassword === ""
+                }
+                className="bg-black text-white text-sm rounded-md px-4 py-2 disabled:bg-slate-200 disabled:text-black"
               >
                 {changeUserPasswordStatus === LoadingStates.LOADING
                   ? `Saving...`
@@ -132,8 +173,27 @@ export const Dashboard = () => {
           </form>
         </section>
         <section className="min-w-[368px] max-w-[368px] px-[24px] bg-slate-50 flex flex-col items-center justify-center">
-          <RiProfileLine size={180} color="gray" />
-          <button className="bg-blue-700 bottom-0 text-white text-sm rounded-md px-4 py-2">
+          {profileImageSrc ? (
+            <img
+              src={profileImageSrc}
+              alt="Profile"
+              className="w-36 h-36 rounded-lg mb-3 object-cover"
+              onClick={handleImageClick}
+            />
+          ) : (
+            <RiProfileLine onClick={handleImageClick} size={180} color="gray" />
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
+          <button
+            className="bg-blue-700 bottom-0 text-white text-sm rounded-md px-4 py-2"
+            onClick={handleAvatarUpdate}
+          >
             Update Profile Picture
           </button>
         </section>

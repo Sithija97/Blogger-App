@@ -22,6 +22,7 @@ export type IUser = {
   username: string;
   email: string;
   role: USER_ROLES;
+  avatar?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -41,4 +42,7 @@ export type IAuthState = {
   changeUserPasswordStatus: string;
   changeUserPasswordSuccess: boolean;
   changeUserPasswordError: boolean;
+  changeUserAvatarStatus: string;
+  changeUserAvatarSuccess: boolean;
+  changeUserAvatarError: boolean;
 };

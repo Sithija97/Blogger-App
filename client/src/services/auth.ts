@@ -38,10 +38,22 @@ const changePassword = async (payload: ChangePasswordPayload) => {
   );
 };
 
+const changeAvatar = async (formData: FormData) => {
+  const response = await axios.put(
+    `${import.meta.env.VITE_BASE_URL}/auth/change-avatar`,
+    formData,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+
 const userService = {
   login,
   register,
   logout,
   changePassword,
+  changeAvatar,
 };
 export default userService;

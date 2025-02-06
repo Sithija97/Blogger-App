@@ -172,14 +172,17 @@ export const Dashboard = () => {
             </div>
           </form>
         </section>
-        <section className="min-w-[368px] max-w-[368px] px-[24px] bg-slate-50 flex flex-col items-center justify-center">
+        <section className="min-w-[368px] max-w-[368px] px-[24px] flex flex-col items-start pt-4">
           {profileImageSrc ? (
-            <img
-              src={profileImageSrc}
-              alt="Profile"
-              className="w-36 h-36 rounded-lg mb-3 object-cover"
-              onClick={handleImageClick}
-            />
+            <div className="flex flex-col">
+              <img
+                src={profileImageSrc}
+                alt="Profile"
+                className="w-36 h-36 rounded-full mb-2 object-cover"
+                onClick={handleImageClick}
+              />
+              <p> {loggedInUser && loggedInUser.username}</p>
+            </div>
           ) : (
             <RiProfileLine onClick={handleImageClick} size={180} color="gray" />
           )}
@@ -190,12 +193,12 @@ export const Dashboard = () => {
             onChange={handleImageUpload}
             style={{ display: "none" }}
           />
-          <button
-            className="bg-blue-700 bottom-0 text-white text-sm rounded-md px-4 py-2"
+          <p
+            className="text-green-700 text-sm mt-2 cursor-pointer"
             onClick={handleAvatarUpdate}
           >
-            Update Profile Picture
-          </button>
+            Update Profile
+          </p>
         </section>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { IoClose, IoReorderThree } from "react-icons/io5";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { logoutUser } from "../store/auth.slice";
 import { AuthButtonToggle } from "./auh-button-section";
+import logo from "../assets/logo.svg";
 
 const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
   const links = [
@@ -79,12 +80,13 @@ export const Navbar = () => {
     // </header>
     <header className="h-[57px] w-full border-b border-[#F2F2F2]">
       <div className="h-full px-6 flex justify-between">
-        <div className="h-full w-full flex items-center">
-          <img
+        <div className="h-full  flex items-center">
+          {/* <img
             src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg"
             className="h-6"
             alt="logo"
-          />
+          /> */}
+          <img src={logo} alt="logo" className="h-6" />
         </div>
         <div className="w-full flex items-center gap-4 justify-end">
           <LinksContainer />

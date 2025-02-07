@@ -1,5 +1,5 @@
 import { Post } from "../molecules";
-import { SectionTemplate } from "../templates";
+import { SectionTemplate } from "../pages";
 
 export const data = [
   {

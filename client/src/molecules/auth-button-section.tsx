@@ -23,7 +23,7 @@ export const AuthButtonToggle = ({ styles }: IProps) => {
     <>
       {isAuthenticated ? (
         <button
-          className={`hover:text-slate-600 transition-all duration-300 ${styles}`}
+          className={`text-slate-400 hover:text-slate-900 transition-all duration-300 ${styles}`}
           onClick={logout}
         >
           Logout

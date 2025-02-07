@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Badge } from "../attoms";
-import { SectionTemplate } from "../templates";
+import { SectionTemplate } from "../pages";
 
 export type ICategory = {
   label: string;

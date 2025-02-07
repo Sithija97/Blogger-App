@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ADMIN, ADMIN_ADD_POSTS, ADMIN_EDIT_POSTS } from "../routes/router";
+import { ADMIN } from "../routes/router";
 
 export const AdminSidebar = () => {
   const sidelinks = [
@@ -7,14 +7,14 @@ export const AdminSidebar = () => {
       name: "Admin",
       to: ADMIN,
     },
-    {
-      name: "Add",
-      to: ADMIN_ADD_POSTS,
-    },
-    {
-      name: "Edit",
-      to: ADMIN_EDIT_POSTS,
-    },
+    // {
+    //   name: "Add",
+    //   to: ADD_POSTS,
+    // },
+    // {
+    //   name: "Edit",
+    //   to: ADMIN_EDIT_POSTS,
+    // },
   ];
   return (
     <div className="w-fit h-[calc(100vh-57px)] border-r rounded flex flex-col gap-2 p-4">

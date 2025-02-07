@@ -1,6 +1,6 @@
 import { Post } from "../molecules";
 import { data } from "../organisms";
-import { SectionTemplate } from "./section";
+import { SectionTemplate } from "../templates/section";
 
 export const LikedPosts = () => {
   return (

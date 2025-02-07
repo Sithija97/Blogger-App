@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import {
   Admin,
-  AdminAddPosts,
+  AddPosts,
   AdminDashboard,
   AdminEditPosts,
   AdminSignIn,
@@ -15,8 +15,8 @@ import {
   Profile,
   SignIn,
   SignUp,
-} from "../templates";
-import { AuthTemplate, MainTemplate } from "../pages";
+} from "../pages";
+import { AuthTemplate, MainTemplate } from "../templates";
 
 export const ROOT = "/";
 export const LOGIN = "/sign-in";
@@ -30,7 +30,7 @@ export const ALL_BLOGS = "/all-posts";
 export const CATEGORY = "/categories/:category";
 export const ADMIN = "/admin";
 export const ADMIN_LOGIN = "/admin/sign-in";
-export const ADMIN_ADD_POSTS = "/admin/add-blogs";
+export const ADD_POSTS = "/add-blogs";
 export const ADMIN_EDIT_POSTS = "/admin/edit-blogs";
 
 export const router = createBrowserRouter([
@@ -49,6 +49,7 @@ export const router = createBrowserRouter([
         path: ADMIN_LOGIN,
         element: <AdminSignIn />,
       },
+      { path: ADD_POSTS, element: <AddPosts /> },
     ],
   },
   {
@@ -85,7 +86,6 @@ export const router = createBrowserRouter([
         element: <Admin />,
         children: [
           { index: true, element: <AdminDashboard /> },
-          { path: ADMIN_ADD_POSTS, element: <AdminAddPosts /> },
           { path: ADMIN_EDIT_POSTS, element: <AdminEditPosts /> },
         ],
       },

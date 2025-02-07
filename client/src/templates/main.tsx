@@ -22,7 +22,9 @@ export const MainTemplate = () => {
 
   return (
     <>
-      <Navbar />
+      <div className="border-b border-[#F2F2F2]">
+        <Navbar />
+      </div>
       {/* <main className="mx-12 md:mx-24 lg:mx-52">
         <div className="my-4">
           <Outlet />

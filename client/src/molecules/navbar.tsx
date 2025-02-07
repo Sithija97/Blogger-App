@@ -1,18 +1,28 @@
-import { Link, useNavigate } from "react-router-dom";
-import { ALL_BLOGS, LOGIN, PROFILE, ROOT } from "../routes/router";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ADD_POSTS, ALL_BLOGS, LOGIN, PROFILE, ROOT } from "../routes/router";
 import { useState } from "react";
 import { IoClose, IoReorderThree } from "react-icons/io5";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { logoutUser } from "../store/auth.slice";
-import { AuthButtonToggle } from "./auh-button-section";
+import { AuthButtonToggle } from "./auth-button-section";
+import { RiEditBoxLine } from "@remixicon/react";
 import logo from "../assets/logo.svg";
 
-const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
+const LinksContainer = ({
+  customStyles,
+  publishPost,
+}: {
+  customStyles?: string;
+  publishPost?: () => void;
+}) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const links = [
-    {
-      name: "Home",
-      to: ROOT,
-    },
+    // {
+    //   name: "Home",
+    //   to: ROOT,
+    // },
     {
       name: "Posts",
       to: ALL_BLOGS,
@@ -25,21 +35,48 @@ const LinksContainer = ({ customStyles }: { customStyles?: string }) => {
 
   return (
     <>
-      {links.map((link, index) => (
-        <Link
-          className={`hover:text-slate-600 transition-all duration-300 ${customStyles}`}
-          key={index}
-          to={link.to}
+      {currentPath === ADD_POSTS ? (
+        <button
+          className="py-[2px] px-3 rounded-full bg-green-700"
+          onClick={publishPost}
         >
-          {link.name}
-        </Link>
-      ))}
+          <p className="text-sm text-white">Publish</p>
+        </button>
+      ) : (
+        <WriteButton customStyles="flex items-center justify-center gap-1" />
+      )}
+      {currentPath !== ADD_POSTS &&
+        links.map((link, index) => (
+          <Link
+            className={`text-slate-400 hover:text-slate-900 transition-all duration-300 ${customStyles}`}
+            key={index}
+            to={link.to}
+          >
+            {link.name}
+          </Link>
+        ))}
       <AuthButtonToggle styles={customStyles} />
     </>
   );
 };
 
-export const Navbar = () => {
+const WriteButton = ({ customStyles }: { customStyles?: string }) => {
+  return (
+    <Link
+      className={`text-slate-400 hover:text-slate-900 transition-all duration-300 ${customStyles}`}
+      to={ADD_POSTS}
+    >
+      <RiEditBoxLine size={20} />
+      Write
+    </Link>
+  );
+};
+
+type IProps = {
+  publishPost?: () => void;
+};
+
+export const Navbar = ({ publishPost }: IProps) => {
   const [mobileNav, setMobileNav] = useState<boolean>(false);
 
   const handleMobileNav = () => setMobileNav(!mobileNav);
@@ -78,18 +115,15 @@ export const Navbar = () => {
     //     </div>
     //   </nav>
     // </header>
-    <header className="h-[57px] w-full border-b border-[#F2F2F2]">
+    <header className="h-[57px] w-full">
       <div className="h-full px-6 flex justify-between">
-        <div className="h-full  flex items-center">
-          {/* <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_%28website%29_logo.svg"
-            className="h-6"
-            alt="logo"
-          /> */}
-          <img src={logo} alt="logo" className="h-6" />
+        <div className="h-full flex items-center">
+          <Link to={ROOT}>
+            <img src={logo} alt="logo" className="h-6" />
+          </Link>
         </div>
         <div className="w-full flex items-center gap-4 justify-end">
-          <LinksContainer />
+          <LinksContainer publishPost={publishPost} />
         </div>
       </div>
     </header>

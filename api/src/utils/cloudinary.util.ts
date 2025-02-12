@@ -27,4 +27,23 @@ const storage = new CloudinaryStorage({
   },
 });
 
-export { cloudinary, storage };
+const postStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    const validFormats = ["jpg", "jpeg", "png"];
+    const extension = file.originalname.split(".").pop()?.toLowerCase();
+
+    if (!extension || !validFormats.includes(extension)) {
+      throw new Error("Unsupported file format");
+    }
+
+    return {
+      folder: "posts",
+      format: extension, // Dynamic format based on the file extension
+      public_id: `${file.originalname.split(".")[0]}-${Date.now()}`,
+      resource_type: "image",
+    };
+  },
+});
+
+export { cloudinary, storage, postStorage };

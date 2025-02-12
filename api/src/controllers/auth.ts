@@ -71,7 +71,6 @@ export const handleChangePassword = asyncHandler(
 
 export const handleChangeAvatar = asyncHandler(
   async (req: Request, res: Response) => {
-    console.log(req.file);
     const result = await changeAvatar(req);
     res.status(200).json(result);
   }

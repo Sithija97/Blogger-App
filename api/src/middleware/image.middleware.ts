@@ -1,6 +1,7 @@
 import multer from "multer";
-import { storage } from "../utils/cloudinary.util";
+import { storage, postStorage } from "../utils/cloudinary.util";
 
-const upload = multer({ storage });
+const userImgUpload = multer({ storage });
+const postImgUpload = multer({ storage: postStorage });
 
-export default upload;
+export default { userImgUpload, postImgUpload };

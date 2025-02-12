@@ -31,6 +31,10 @@ authRoutes
   );
 authRoutes
   .route("/change-avatar")
-  .put(authMiddleware.verifyToken, upload.single("image"), handleChangeAvatar);
+  .put(
+    authMiddleware.verifyToken,
+    upload.userImgUpload.single("image"),
+    handleChangeAvatar
+  );
 
 export default authRoutes;

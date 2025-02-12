@@ -1,15 +1,25 @@
 import express from "express";
-import { createPost, getPosts, getPost } from "../controllers";
-import multer from "multer";
+import {
+  handleCreatePost,
+  handleGetPosts,
+  handleGetPostsByUser,
+} from "../controllers";
+import authMiddleware from "../middleware/auth.middleware";
+import upload from "../middleware/image.middleware";
 
-const uploadMiddleware = multer({ dest: "uploads/" });
 const postRoutes = express.Router();
 
 postRoutes
   .route("/")
-  .post(uploadMiddleware.single("file"), createPost)
-  .get(getPosts);
+  .post(
+    authMiddleware.verifyToken,
+    upload.postImgUpload.single("image"),
+    handleCreatePost
+  )
+  .get(handleGetPosts);
 
-postRoutes.route("/:id").get(getPost);
+postRoutes
+  .route("/by-user")
+  .get(authMiddleware.verifyToken, handleGetPostsByUser);
 
-export { postRoutes };
+export default postRoutes;

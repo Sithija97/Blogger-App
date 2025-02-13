@@ -8,7 +8,7 @@ import {
   AllPosts,
   Categories,
   Dashboard,
-  Favourites,
+  MyPosts,
   Home,
   LikedPosts,
   Post,
@@ -23,7 +23,7 @@ export const LOGIN = "/sign-in";
 export const REGISTER = "/sign-up";
 export const CREATE = "/create";
 export const PROFILE = "/profile";
-export const FAVOURITES = "/profile/favourites";
+export const MYPOSTS = "/profile/my-posts";
 export const LIKED_BLOGS = "/profile/liked-posts";
 export const POST = "/post/:id";
 export const ALL_BLOGS = "/all-posts";
@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
         element: <Profile />,
         children: [
           { index: true, element: <Dashboard /> },
-          { path: FAVOURITES, element: <Favourites /> },
+          { path: MYPOSTS, element: <MyPosts /> },
           { path: LIKED_BLOGS, element: <LikedPosts /> },
         ],
       },

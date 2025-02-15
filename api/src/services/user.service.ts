@@ -126,3 +126,12 @@ export const changeAvatar = async (req: Request) => {
     throw new Error("Unexpected error during avatar change.");
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const users = User.find().sort({ createdAt: -1 });
+    return users;
+  } catch (error) {
+    throw new Error("Unexpected error during fetching users.");
+  }
+};

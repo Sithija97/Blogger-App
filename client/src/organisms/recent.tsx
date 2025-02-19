@@ -1,5 +1,6 @@
-import { Post } from "../molecules";
+import { Post, PostItem } from "../molecules";
 import { SectionTemplate } from "../pages";
+import { RootState, useAppSelector } from "../store";
 
 export const data = [
   {
@@ -48,12 +49,13 @@ export const data = [
 ];
 
 export const RecentBlogs = () => {
+  const { posts } = useAppSelector((state: RootState) => state.posts);
   return (
     <SectionTemplate title="">
       <div className="flex flex-col gap-8 lg:gap-4 2xl:gap-6">
-        {data.map((item, index) => (
+        {posts.map((item, index) => (
           <div key={index} className="flex flex-col lg:flex-row gap-2 lg:gap-4">
-            <Post key={index} {...item} />
+            <Post post={item} />
           </div>
         ))}
       </div>

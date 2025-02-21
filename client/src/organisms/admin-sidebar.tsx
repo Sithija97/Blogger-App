@@ -7,10 +7,10 @@ export const AdminSidebar = () => {
       name: "Admin",
       to: ADMIN,
     },
-    // {
-    //   name: "Add",
-    //   to: ADD_POSTS,
-    // },
+    {
+      name: "Categories",
+      to: "/",
+    },
     // {
     //   name: "Edit",
     //   to: ADMIN_EDIT_POSTS,

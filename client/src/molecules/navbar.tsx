@@ -1,12 +1,11 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ADD_POSTS, ALL_BLOGS, LOGIN, PROFILE, ROOT } from "../routes/router";
+import { Link, useLocation } from "react-router-dom";
+import { ADD_POSTS, ALL_BLOGS, PROFILE, ROOT } from "../routes/router";
 import { useState } from "react";
-import { IoClose, IoReorderThree } from "react-icons/io5";
-import { RootState, useAppDispatch, useAppSelector } from "../store";
-import { logoutUser } from "../store/auth.slice";
+import { RootState, useAppSelector } from "../store";
 import { AuthButtonToggle } from "./auth-button-section";
 import { RiEditBoxLine } from "@remixicon/react";
 import logo from "../assets/logo.svg";
+import { LoadingStates } from "../enums";
 
 const LinksContainer = ({
   customStyles,
@@ -17,6 +16,9 @@ const LinksContainer = ({
 }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { createPostStatus } = useAppSelector(
+    (state: RootState) => state.posts
+  );
 
   const links = [
     // {
@@ -40,7 +42,11 @@ const LinksContainer = ({
           className="py-[2px] px-3 rounded-full bg-green-700"
           onClick={publishPost}
         >
-          <p className="text-sm text-white">Publish</p>
+          <p className="text-sm text-white">
+            {createPostStatus == LoadingStates.LOADING
+              ? "Publishing"
+              : "Publish"}
+          </p>
         </button>
       ) : (
         <WriteButton customStyles="flex items-center justify-center gap-1" />
@@ -73,10 +79,11 @@ const WriteButton = ({ customStyles }: { customStyles?: string }) => {
 };
 
 type IProps = {
+  buttonEnable?: boolean;
   publishPost?: () => void;
 };
 
-export const Navbar = ({ publishPost }: IProps) => {
+export const Navbar = ({ buttonEnable, publishPost }: IProps) => {
   const [mobileNav, setMobileNav] = useState<boolean>(false);
 
   const handleMobileNav = () => setMobileNav(!mobileNav);

@@ -7,7 +7,7 @@ export * from "./post";
 export * from "./categories";
 export * from "./profile";
 export * from "./dashboard";
-export * from "./favourites";
+export * from "./my-posts";
 export * from "./liked-posts";
 export * from "./add-posts";
 export * from "./admin";

@@ -5,6 +5,7 @@ import CustomError from "../utils/error.util";
 import jwt from "jsonwebtoken";
 import { SECRET, TOKEN } from "../config";
 import { Request } from "express";
+import { Types } from "mongoose";
 
 export const register = async (user: IUser): Promise<IUserModel> => {
   const { username, email, password } = user;
@@ -129,9 +130,18 @@ export const changeAvatar = async (req: Request) => {
 
 export const getAllUsers = async () => {
   try {
-    const users = User.find().sort({ createdAt: -1 });
+    const users = await User.find().sort({ createdAt: -1 });
     return users;
   } catch (error) {
     throw new Error("Unexpected error during fetching users.");
+  }
+};
+
+export const deleteUser = async (userId: Types.ObjectId) => {
+  try {
+    await User.findByIdAndDelete({ id: userId });
+    return true;
+  } catch (error) {
+    throw new Error("Unexpected error during deleting user.");
   }
 };

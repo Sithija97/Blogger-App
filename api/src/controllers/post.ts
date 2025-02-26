@@ -44,9 +44,8 @@ export const handleUpdatePost = asyncHandler(
 
 export const handleDeletePost = asyncHandler(
   async (req: Request, res: Response) => {
-    const response = await deletePost(
-      new Schema.Types.ObjectId(req.params.postId)
-    );
+    await deletePost(new Schema.Types.ObjectId(req.params.postId));
+    res.status(200).json({ message: "Post deleted successfully." });
   }
 );
 

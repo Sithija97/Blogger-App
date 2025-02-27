@@ -1,11 +1,14 @@
 import express from "express";
 import {
   handleCreatePost,
+  handleDeletePost,
   handleGetPosts,
   handleGetPostsByUser,
 } from "../controllers";
 import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
+import { validate } from "../middleware";
+import { Schemas } from "../schemas";
 
 const postRoutes = express.Router();
 
@@ -14,6 +17,7 @@ postRoutes
   .post(
     authMiddleware.verifyToken,
     upload.postImgUpload.single("image"),
+    validate(Schemas.post.create),
     handleCreatePost
   )
   .get(handleGetPosts);
@@ -21,5 +25,9 @@ postRoutes
 postRoutes
   .route("/by-user")
   .get(authMiddleware.verifyToken, handleGetPostsByUser);
+
+postRoutes
+  .route("/:postId")
+  .delete(authMiddleware.verifyToken, handleDeletePost);
 
 export default postRoutes;

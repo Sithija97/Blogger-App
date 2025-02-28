@@ -11,10 +11,10 @@ export const Sidebar = () => {
       name: "My Posts",
       to: MYPOSTS,
     },
-    {
-      name: "Liked",
-      to: LIKED_BLOGS,
-    },
+    // {
+    //   name: "Liked",
+    //   to: LIKED_BLOGS,
+    // },
   ];
   return (
     <div className="w-28 h-[calc(100vh-57px)] border-r rounded flex flex-col gap-2 p-4">

@@ -16,6 +16,9 @@ const initialState: IPostState = {
   getPostByUserSuccess: false,
   getPostByUserError: false,
   selectedPost: undefined,
+  deleteMyPostStatus: LoadingStates.IDLE,
+  deleteMyPostSuccess: false,
+  deleteMyPostError: false,
 };
 
 export const createPosts = createAsyncThunk(
@@ -54,6 +57,17 @@ export const getPostsByUser = createAsyncThunk(
   }
 );
 
+export const deleteMyPost = createAsyncThunk(
+  "posts/delete",
+  async (postId: string, thunkAPI) => {
+    try {
+      await postService.deletePost(postId);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const PostSlice = createSlice({
   name: "posts",
   initialState,
@@ -61,7 +75,9 @@ const PostSlice = createSlice({
     setSelectedPost(state, action) {
       state.selectedPost = action.payload;
     },
-
+    clearSelectedPost(state) {
+      state.selectedPost = undefined;
+    },
     resetPostSuccess(state) {
       state.createPostSuccess = false;
     },
@@ -110,9 +126,24 @@ const PostSlice = createSlice({
       .addCase(getPostsByUser.rejected, (state) => {
         state.getPostByUserStatus = LoadingStates.FAILURE;
         state.getPostByUserError = true;
+      })
+
+      // delete post
+      .addCase(deleteMyPost.pending, (state) => {
+        state.deleteMyPostStatus = LoadingStates.LOADING;
+        state.deleteMyPostError = false;
+      })
+      .addCase(deleteMyPost.fulfilled, (state) => {
+        state.deleteMyPostSuccess = true;
+        state.deleteMyPostStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(deleteMyPost.rejected, (state) => {
+        state.deleteMyPostStatus = LoadingStates.FAILURE;
+        state.deleteMyPostError = true;
       });
   },
 });
 
-export const { setSelectedPost, resetPostSuccess } = PostSlice.actions;
+export const { setSelectedPost, clearSelectedPost, resetPostSuccess } =
+  PostSlice.actions;
 export default PostSlice.reducer;

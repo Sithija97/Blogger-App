@@ -7,7 +7,7 @@ import {
   getPostsByUser,
   updatePost,
 } from "../services/post.service";
-import { Schema } from "mongoose";
+import { Mongoose, Schema } from "mongoose";
 
 export const handleCreatePost = asyncHandler(
   async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ export const handleUpdatePost = asyncHandler(
 
 export const handleDeletePost = asyncHandler(
   async (req: Request, res: Response) => {
-    await deletePost(new Schema.Types.ObjectId(req.params.postId));
+    await deletePost(req.params.postId);
     res.status(200).json({ message: "Post deleted successfully." });
   }
 );

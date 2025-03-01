@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { IPostModel } from "../models";
 import Post from "../models/post";
-import { Schema } from "mongoose";
+import { Mongoose, Schema } from "mongoose";
 import CustomError from "../utils/error.util";
 
 export const createPost = async (req: Request) => {
@@ -59,9 +59,7 @@ export const updatePost = async (
   }
 };
 
-export const deletePost = async (
-  postId: Schema.Types.ObjectId
-): Promise<void> => {
+export const deletePost = async (postId: string): Promise<void> => {
   try {
     const result = await Post.findByIdAndDelete(postId);
 

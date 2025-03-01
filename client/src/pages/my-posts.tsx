@@ -4,8 +4,7 @@ import { SectionTemplate } from "../templates";
 import { LoadingStates } from "../enums";
 import { Loader } from "../attoms";
 import { useEffect } from "react";
-import { getPostsByUser } from "../store/post.slice";
-import { data } from "../organisms";
+import { deleteMyPost, getPostsByUser } from "../store/post.slice";
 
 export const MyPosts = () => {
   const dispatch = useAppDispatch();
@@ -14,9 +13,18 @@ export const MyPosts = () => {
     (state: RootState) => state.posts
   );
 
+  const loadData = () => dispatch(getPostsByUser());
+
   useEffect(() => {
-    dispatch(getPostsByUser());
+    loadData();
   }, []);
+
+  const handleDeletePost = async (postId: string) => {
+    if (window.confirm("Are you sure you want to proceed?")) {
+      await dispatch(deleteMyPost(postId));
+      loadData();
+    }
+  };
 
   return (
     <SectionTemplate title="My Posts" customStyles="ml-4">
@@ -29,7 +37,10 @@ export const MyPosts = () => {
               key={index}
               className="flex flex-col lg:flex-row gap-2 lg:gap-4"
             >
-              <PostItem post={item} />
+              <PostItem
+                post={item}
+                handleDeletePost={() => handleDeletePost(item._id)}
+              />
             </div>
           ))
         )}

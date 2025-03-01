@@ -20,4 +20,7 @@ export type IPostState = {
   getPostByUserStatus: string;
   getPostByUserSuccess: boolean;
   getPostByUserError: boolean;
+  deleteMyPostStatus: string;
+  deleteMyPostSuccess: boolean;
+  deleteMyPostError: boolean;
 };

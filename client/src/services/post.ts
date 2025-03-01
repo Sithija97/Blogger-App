@@ -26,10 +26,21 @@ const getPostsByUser = async () => {
   return response.data;
 };
 
+const deletePost = async (postId: string) => {
+  const response = await axios.delete(
+    `${import.meta.env.VITE_BASE_URL}/post/${postId}`,
+    {
+      withCredentials: true,
+    }
+  );
+  return response.data;
+};
+
 const postService = {
   createPost,
   getPosts,
   getPostsByUser,
+  deletePost,
 };
 
 export default postService;

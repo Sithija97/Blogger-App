@@ -11,6 +11,7 @@ type IProps = {
 
 type IPostItemProps = {
   post: IPost;
+  handleDeletePost: () => void;
 };
 
 export const Post = ({ post }: IProps) => {
@@ -46,7 +47,7 @@ export const Post = ({ post }: IProps) => {
   );
 };
 
-export const PostItem = ({ post }: IPostItemProps) => {
+export const PostItem = ({ post, handleDeletePost }: IPostItemProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { _id, title, content, image } = post;
@@ -54,9 +55,10 @@ export const PostItem = ({ post }: IPostItemProps) => {
   const handleSetSelectedPost = () => {
     dispatch(setSelectedPost(post));
   };
+
   return (
     <>
-      <div className="flex">
+      <div className="flex w-full">
         <div className="w-full lg:w-4/6 max-h-40 border-b border-[#F2F2F2]">
           <Link to={`/post/${_id}`} onClick={handleSetSelectedPost}>
             <h1 className="text-lg font-extrabold">{title}</h1>
@@ -87,6 +89,7 @@ export const PostItem = ({ post }: IPostItemProps) => {
         <button>
           <RiDeleteBin6Fill
             size={20}
+            onClick={handleDeletePost}
             className="text-slate-300 hover:text-red-600"
           />
         </button>

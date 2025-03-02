@@ -4,6 +4,7 @@ import {
   handleDeletePost,
   handleGetPosts,
   handleGetPostsByUser,
+  handleUpdatePost,
 } from "../controllers";
 import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
@@ -28,6 +29,12 @@ postRoutes
 
 postRoutes
   .route("/:postId")
+  .put(
+    authMiddleware.verifyToken,
+    upload.postImgUpload.single("image"),
+    validate(Schemas.post.create),
+    handleUpdatePost
+  )
   .delete(authMiddleware.verifyToken, handleDeletePost);
 
 export default postRoutes;

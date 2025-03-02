@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { IPostModel } from "../models";
 import Post from "../models/post";
-import { Mongoose, Schema } from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 import CustomError from "../utils/error.util";
 
 export const createPost = async (req: Request) => {
@@ -39,7 +39,7 @@ export const getPostsByUser = async (
 };
 
 export const updatePost = async (
-  postId: Schema.Types.ObjectId,
+  postId: string,
   payload: Partial<IPostModel>
 ): Promise<IPostModel> => {
   try {
@@ -55,6 +55,7 @@ export const updatePost = async (
 
     return updatedPost;
   } catch (error) {
+    console.log(error);
     throw new Error("Unexpected error during updating post.");
   }
 };

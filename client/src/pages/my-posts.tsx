@@ -1,13 +1,20 @@
-import { Post, PostItem } from "../molecules";
+import { PostItem } from "../molecules";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { SectionTemplate } from "../templates";
 import { LoadingStates } from "../enums";
 import { Loader } from "../attoms";
 import { useEffect } from "react";
-import { deleteMyPost, getPostsByUser } from "../store/post.slice";
+import {
+  deleteMyPost,
+  getPostsByUser,
+  setSelectedPostToEdit,
+} from "../store/post.slice";
+import { IPost } from "../models";
+import { useNavigate } from "react-router-dom";
 
 export const MyPosts = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { getPostByUserStatus, postsByUser } = useAppSelector(
     (state: RootState) => state.posts
@@ -26,6 +33,11 @@ export const MyPosts = () => {
     }
   };
 
+  const handleEditPost = (post: IPost) => {
+    dispatch(setSelectedPostToEdit(post));
+    navigate(`/edit-blog/${post._id}`);
+  };
+
   return (
     <SectionTemplate title="My Posts" customStyles="ml-4">
       <div className="flex flex-col gap-8 lg:gap-4 px-20 h-[calc(100vh-140px)] overflow-y-auto">
@@ -40,6 +52,7 @@ export const MyPosts = () => {
               <PostItem
                 post={item}
                 handleDeletePost={() => handleDeletePost(item._id)}
+                handleEditPost={() => handleEditPost(item)}
               />
             </div>
           ))

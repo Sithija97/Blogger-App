@@ -12,6 +12,7 @@ type IProps = {
 type IPostItemProps = {
   post: IPost;
   handleDeletePost: () => void;
+  handleEditPost: () => void;
 };
 
 export const Post = ({ post }: IProps) => {
@@ -47,7 +48,11 @@ export const Post = ({ post }: IProps) => {
   );
 };
 
-export const PostItem = ({ post, handleDeletePost }: IPostItemProps) => {
+export const PostItem = ({
+  post,
+  handleDeletePost,
+  handleEditPost,
+}: IPostItemProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { _id, title, content, image } = post;
@@ -83,6 +88,7 @@ export const PostItem = ({ post, handleDeletePost }: IPostItemProps) => {
         <button>
           <RiEdit2Fill
             size={20}
+            onClick={handleEditPost}
             className="text-slate-300 hover:text-blue-600"
           />
         </button>

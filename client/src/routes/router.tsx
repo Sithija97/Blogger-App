@@ -31,6 +31,7 @@ export const CATEGORY = "/categories/:category";
 export const ADMIN = "/admin";
 export const ADMIN_LOGIN = "/admin/sign-in";
 export const ADD_POSTS = "/add-blogs";
+export const EDIT_POSTS = "/edit-blog/:id";
 export const ADMIN_EDIT_POSTS = "/admin/edit-blogs";
 
 export const router = createBrowserRouter([
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
         element: <AdminSignIn />,
       },
       { path: ADD_POSTS, element: <AddPosts /> },
+      { path: EDIT_POSTS, element: <AddPosts /> },
     ],
   },
   {

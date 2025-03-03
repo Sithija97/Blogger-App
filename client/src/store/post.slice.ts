@@ -9,6 +9,9 @@ const initialState: IPostState = {
   createPostStatus: LoadingStates.IDLE,
   createPostSuccess: false,
   createPostError: false,
+  updatePostStatus: LoadingStates.IDLE,
+  updatePostSuccess: false,
+  updatePostError: false,
   getPostStatus: LoadingStates.IDLE,
   getPostSuccess: false,
   getPostError: false,
@@ -16,6 +19,7 @@ const initialState: IPostState = {
   getPostByUserSuccess: false,
   getPostByUserError: false,
   selectedPost: undefined,
+  selectedPostToEdit: undefined,
   deleteMyPostStatus: LoadingStates.IDLE,
   deleteMyPostSuccess: false,
   deleteMyPostError: false,
@@ -26,6 +30,24 @@ export const createPosts = createAsyncThunk(
   async (payload: FormData, thunkAPI) => {
     try {
       const response = postService.createPost(payload);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updatePost = createAsyncThunk(
+  "posts/update",
+  async (
+    postData: {
+      _id: string;
+      form: FormData;
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = postService.updatePost(postData._id, postData.form);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -75,8 +97,14 @@ const PostSlice = createSlice({
     setSelectedPost(state, action) {
       state.selectedPost = action.payload;
     },
+    setSelectedPostToEdit(state, action) {
+      state.selectedPostToEdit = action.payload;
+    },
     clearSelectedPost(state) {
       state.selectedPost = undefined;
+    },
+    clearSelectedPostToEdit(state) {
+      state.selectedPostToEdit = undefined;
     },
     resetPostSuccess(state) {
       state.createPostSuccess = false;
@@ -96,6 +124,20 @@ const PostSlice = createSlice({
       .addCase(createPosts.rejected, (state) => {
         state.createPostStatus = LoadingStates.FAILURE;
         state.createPostError = true;
+      })
+
+      // update
+      .addCase(updatePost.pending, (state) => {
+        state.updatePostStatus = LoadingStates.LOADING;
+        state.updatePostError = false;
+      })
+      .addCase(updatePost.fulfilled, (state) => {
+        state.updatePostSuccess = true;
+        state.updatePostStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(updatePost.rejected, (state) => {
+        state.updatePostStatus = LoadingStates.FAILURE;
+        state.updatePostError = true;
       })
 
       // get all
@@ -144,6 +186,11 @@ const PostSlice = createSlice({
   },
 });
 
-export const { setSelectedPost, clearSelectedPost, resetPostSuccess } =
-  PostSlice.actions;
+export const {
+  setSelectedPost,
+  setSelectedPostToEdit,
+  clearSelectedPost,
+  clearSelectedPostToEdit,
+  resetPostSuccess,
+} = PostSlice.actions;
 export default PostSlice.reducer;

@@ -109,6 +109,9 @@ const PostSlice = createSlice({
     resetPostSuccess(state) {
       state.createPostSuccess = false;
     },
+    resetUpdatePostSuccess(state) {
+      state.updatePostSuccess = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -192,5 +195,6 @@ export const {
   clearSelectedPost,
   clearSelectedPostToEdit,
   resetPostSuccess,
+  resetUpdatePostSuccess,
 } = PostSlice.actions;
 export default PostSlice.reducer;

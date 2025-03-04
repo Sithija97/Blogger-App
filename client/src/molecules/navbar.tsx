@@ -16,7 +16,7 @@ const LinksContainer = ({
 }) => {
   const location = useLocation();
   const currentPath = location.pathname;
-  const { createPostStatus } = useAppSelector(
+  const { createPostStatus, selectedPostToEdit } = useAppSelector(
     (state: RootState) => state.posts
   );
 
@@ -35,9 +35,11 @@ const LinksContainer = ({
     },
   ];
 
+  const EDIT_POST_ROUTE = `/edit-blog/${selectedPostToEdit?._id}`;
+
   return (
     <>
-      {currentPath === ADD_POSTS ? (
+      {currentPath === ADD_POSTS || currentPath === EDIT_POST_ROUTE ? (
         <button
           className="py-[2px] px-3 rounded-full bg-green-700"
           onClick={publishPost}
@@ -52,6 +54,7 @@ const LinksContainer = ({
         <WriteButton customStyles="flex items-center justify-center gap-1" />
       )}
       {currentPath !== ADD_POSTS &&
+        currentPath !== EDIT_POST_ROUTE &&
         links.map((link, index) => (
           <Link
             className={`text-slate-400 hover:text-slate-900 transition-all duration-300 ${customStyles}`}

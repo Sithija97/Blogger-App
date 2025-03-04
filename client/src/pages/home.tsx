@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { Categories, RecentBlogs } from "../organisms";
-import { getPosts, resetPostSuccess } from "../store/post.slice";
+import {
+  getPosts,
+  resetPostSuccess,
+  resetUpdatePostSuccess,
+} from "../store/post.slice";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { LoadingStates } from "../enums";
 import { Loader } from "../attoms";
@@ -27,6 +31,7 @@ export const Home = () => {
 
   useEffect(() => {
     dispatch(resetPostSuccess());
+    dispatch(resetUpdatePostSuccess());
     dispatch(getPosts());
   }, []);
 

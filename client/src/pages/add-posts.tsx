@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Navbar } from "../molecules";
 import { RootState, useAppDispatch, useAppSelector } from "../store";
-import { createPosts } from "../store/post.slice";
+import {
+  clearSelectedPostToEdit,
+  createPosts,
+  updatePost,
+} from "../store/post.slice";
 import { useNavigate } from "react-router-dom";
-import { ROOT } from "../routes/router";
+import { ADD_POSTS, ROOT } from "../routes/router";
 
 export const AddPosts = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const currentPath = location.pathname;
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
@@ -16,15 +21,23 @@ export const AddPosts = () => {
   const { loggedInUser } = useAppSelector(
     (state: RootState) => state.authentication
   );
-  const { createPostSuccess } = useAppSelector(
-    (state: RootState) => state.posts
-  );
+  const { createPostSuccess, updatePostSuccess, selectedPostToEdit } =
+    useAppSelector((state: RootState) => state.posts);
+
+  const EDIT_POST_ROUTE = `/edit-blog/${selectedPostToEdit?._id}`;
 
   useEffect(() => {
-    if (createPostSuccess) {
+    if (createPostSuccess || updatePostSuccess) {
       navigate(ROOT);
     }
-  }, [createPostSuccess]);
+  }, [createPostSuccess, updatePostSuccess]);
+
+  useEffect(() => {
+    if (selectedPostToEdit && currentPath !== ADD_POSTS) {
+      setTitle(selectedPostToEdit.title);
+      setContent(selectedPostToEdit.content);
+    }
+  }, []);
 
   const handleImageClick = () => fileInputRef.current?.click();
 
@@ -36,15 +49,28 @@ export const AddPosts = () => {
   };
 
   const publish = async () => {
+    console.log("clicked");
     const form = new FormData();
 
-    if (image && loggedInUser) {
+    if (loggedInUser) {
       form.append("title", title);
       form.append("content", content);
-      form.append("image", image);
+
+      // Check if a new image is uploaded, otherwise use the existing image
+      if (image) {
+        form.append("image", image);
+      } else if (selectedPostToEdit?.image) {
+        form.append("image", selectedPostToEdit.image);
+      }
+
       form.append("user", loggedInUser?._id);
 
-      await dispatch(createPosts(form));
+      if (selectedPostToEdit && currentPath === EDIT_POST_ROUTE) {
+        await dispatch(updatePost({ _id: selectedPostToEdit._id, form }));
+        dispatch(clearSelectedPostToEdit());
+      } else {
+        await dispatch(createPosts(form));
+      }
     }
   };
 
@@ -73,6 +99,13 @@ export const AddPosts = () => {
               className=" h-80 mb-2 object-cover"
               onClick={handleImageClick}
             />
+          ) : selectedPostToEdit && currentPath !== ADD_POSTS ? (
+            <img
+              src={selectedPostToEdit?.image}
+              alt="Profile"
+              className=" h-80 mb-2 object-cover"
+              onClick={handleImageClick}
+            />
           ) : (
             <div
               className="bg-slate-100 p-40 flex items-center justify-center cursor-pointer"
@@ -81,6 +114,7 @@ export const AddPosts = () => {
               <p className="text-sm text-slate-500">Upload Image</p>
             </div>
           )}
+
           <input
             type="file"
             accept="image/*"

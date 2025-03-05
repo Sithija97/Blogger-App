@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ADMIN } from "../routes/router";
+import { ADMIN, CATEGORY } from "../routes/router";
 
 export const AdminSidebar = () => {
   const sidelinks = [
@@ -8,8 +8,8 @@ export const AdminSidebar = () => {
       to: ADMIN,
     },
     {
-      name: "Categories",
-      to: "/",
+      name: "Topics",
+      to: CATEGORY,
     },
     // {
     //   name: "Edit",

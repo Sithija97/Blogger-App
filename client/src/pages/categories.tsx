@@ -1,19 +1,31 @@
 import { useLocation } from "react-router-dom";
-import { Post } from "../molecules";
-import { data } from "../organisms";
-import { SectionTemplate } from "../templates/section";
+import { RiAddLine } from "react-icons/ri";
 
 export const Categories = () => {
   const location = useLocation();
+
+  const handleAddTopics = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Add your logic here
+    console.log("submiteed");
+  };
+
   return (
-    <SectionTemplate title={location.pathname.split("/")[2]}>
-      <div className="flex flex-col gap-8 lg:gap-4 h-[calc(100vh-140px)] overflow-y-auto px-20">
-        {data.map((item, index) => (
-          <div key={index} className="flex flex-col lg:flex-row gap-2 lg:gap-4">
-            <Post {...item} />
-          </div>
-        ))}
+    <div className="h-full">
+      <div className="bg-slate-100 w-full h-32">category slider</div>
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="text-4xl font-semibold py-1">Explore Topics</h1>
+        <div className="relative w-full max-w-md my-6">
+          <form action="" onSubmit={handleAddTopics}>
+            <input
+              type="text"
+              placeholder="Add topics"
+              className="w-full p-3 pl-4 pr-10 rounded-full focus:outline-none bg-slate-50 text-gray-700"
+            />
+            <RiAddLine className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer" />
+          </form>
+        </div>
       </div>
-    </SectionTemplate>
+    </div>
   );
 };

@@ -3,3 +3,4 @@ export * from "./categories";
 export * from "./recent";
 export * from "./sidebar";
 export * from "./admin-sidebar";
+export * from "./topics-slider";

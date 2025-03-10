@@ -5,6 +5,10 @@ import { LoadingStates } from "../enums";
 
 const initialState: ICategoryState = {
   categories: [],
+  selectedCategory: {
+    _id: "1",
+    name: "Explore topics",
+  },
   getCategoriesStatus: LoadingStates.IDLE,
   getCategoriesSuccess: false,
   getCategoriesError: false,
@@ -55,7 +59,14 @@ export const deleteCategories = createAsyncThunk(
 const CategorySlice = createSlice({
   name: "category",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCategory(state, action) {
+      state.selectedCategory = action.payload;
+    },
+    clearSelectedCategory(state) {
+      state.selectedCategory = initialState.selectedCategory;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // get
@@ -105,5 +116,6 @@ const CategorySlice = createSlice({
   },
 });
 
-// export const {  } = CategorySlice.actions;
+export const { setSelectedCategory, clearSelectedCategory } =
+  CategorySlice.actions;
 export default CategorySlice.reducer;

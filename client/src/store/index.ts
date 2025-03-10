@@ -13,6 +13,7 @@ import {
 import storage from "redux-persist/es/storage";
 import AuthReducer from "./auth.slice";
 import PostReducer from "./post.slice";
+import CategoryReducer from "./category.slice";
 
 const persistConfig = {
   key: "authentication",
@@ -25,6 +26,7 @@ const persistedReducer = persistReducer(persistConfig, AuthReducer);
 const rootReducer = combineReducers({
   authentication: persistedReducer,
   posts: PostReducer,
+  categories: CategoryReducer,
 });
 
 export const store = configureStore({

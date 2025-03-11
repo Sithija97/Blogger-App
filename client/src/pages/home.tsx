@@ -8,6 +8,7 @@ import {
 import { RootState, useAppDispatch, useAppSelector } from "../store";
 import { LoadingStates } from "../enums";
 import { Loader } from "../attoms";
+import { getCategories } from "../store/category.slice";
 
 type IAuthor = {
   _id: string;
@@ -29,10 +30,15 @@ export const Home = () => {
   const dispatch = useAppDispatch();
   const { getPostStatus } = useAppSelector((state: RootState) => state.posts);
 
+  const loadData = () => {
+    dispatch(getPosts());
+    dispatch(getCategories());
+  };
+
   useEffect(() => {
     dispatch(resetPostSuccess());
     dispatch(resetUpdatePostSuccess());
-    dispatch(getPosts());
+    loadData();
   }, []);
 
   return (

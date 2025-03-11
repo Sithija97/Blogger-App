@@ -27,6 +27,7 @@ export const MYPOSTS = "/profile/my-posts";
 export const LIKED_BLOGS = "/profile/liked-posts";
 export const POST = "/post/:id";
 export const ALL_BLOGS = "/all-posts";
+export const USER_CATEGORY = "/categories";
 export const CATEGORY = "/admin/categories";
 export const ADMIN = "/admin";
 export const ADMIN_LOGIN = "/admin/sign-in";
@@ -71,6 +72,14 @@ export const router = createBrowserRouter([
         element: <Post />,
       },
       {
+        path: CATEGORY,
+        element: <Categories />,
+      },
+      {
+        path: USER_CATEGORY,
+        element: <Categories />,
+      },
+      {
         path: PROFILE,
         element: <Profile />,
         children: [
@@ -86,10 +95,6 @@ export const router = createBrowserRouter([
           { index: true, element: <AdminDashboard /> },
           { path: ADMIN_EDIT_POSTS, element: <AdminEditPosts /> },
         ],
-      },
-      {
-        path: CATEGORY,
-        element: <Categories />,
       },
     ],
   },

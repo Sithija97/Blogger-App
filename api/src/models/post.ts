@@ -10,7 +10,7 @@ const PostSchema = new Schema<IPostModel>(
     image: { type: String },
     user: { type: Schema.Types.ObjectId, ref: "User" },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 const Post = model<IPostModel>("Post", PostSchema);

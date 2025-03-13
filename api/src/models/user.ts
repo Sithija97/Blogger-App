@@ -20,6 +20,7 @@ const UserSchema = new Schema<IUserModel>(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

@@ -18,7 +18,9 @@ export const createPost = async (req: Request) => {
 
 export const getPosts = async (): Promise<IPostModel[]> => {
   try {
-    const posts = await Post.find().populate("user").sort({ createdAt: -1 });
+    const posts = await Post.find()
+      .populate({ path: "user", select: "-password" })
+      .sort({ createdAt: -1 });
     return posts;
   } catch (error) {
     throw new Error("Unexpected error during fetching posts.");
@@ -30,7 +32,7 @@ export const getPostsByUser = async (
 ): Promise<IPostModel[]> => {
   try {
     const posts = await Post.find({ user: userId })
-      .populate("user")
+      .populate({ path: "user", select: "-password" })
       .sort({ createdAt: -1 });
     return posts;
   } catch (error) {
@@ -47,7 +49,7 @@ export const updatePost = async (
       postId,
       { $set: payload },
       { new: true }
-    ).populate("user");
+    ).populate({ path: "user", select: "-password" });
 
     if (!updatedPost) {
       throw new CustomError("Post not found");

@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { ADD_POSTS, ALL_BLOGS, PROFILE, ROOT } from "../routes/router";
+import { ADD_POSTS, ADMIN, ALL_BLOGS, PROFILE, ROOT } from "../routes/router";
 import { useState } from "react";
 import { RootState, useAppSelector } from "../store";
 import { AuthButtonToggle } from "./auth-button-section";
 import { RiEditBoxLine } from "@remixicon/react";
 import logo from "../assets/logo.svg";
-import { LoadingStates } from "../enums";
+import { LoadingStates, USER_ROLES } from "../enums";
 
 const LinksContainer = ({
   customStyles,
@@ -16,6 +16,9 @@ const LinksContainer = ({
 }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { loggedInUser } = useAppSelector(
+    (state: RootState) => state.authentication
+  );
   const { createPostStatus, selectedPostToEdit } = useAppSelector(
     (state: RootState) => state.posts
   );
@@ -64,6 +67,14 @@ const LinksContainer = ({
             {link.name}
           </Link>
         ))}
+      {loggedInUser?.role === USER_ROLES.ADMIN && (
+        <Link
+          className={`text-slate-400 hover:text-slate-900 transition-all duration-300 ${customStyles}`}
+          to={ADMIN}
+        >
+          Admin
+        </Link>
+      )}
       <AuthButtonToggle styles={customStyles} />
     </>
   );

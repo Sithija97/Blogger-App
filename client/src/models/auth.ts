@@ -27,6 +27,13 @@ export type IUser = {
   updatedAt: string;
 };
 
+export type ICategory = {
+  _id: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type IAuthState = {
   loggedInUser: IUser | undefined;
   isAuthenticated: boolean;
@@ -45,4 +52,18 @@ export type IAuthState = {
   changeUserAvatarStatus: string;
   changeUserAvatarSuccess: boolean;
   changeUserAvatarError: boolean;
+};
+
+export type ICategoryState = {
+  categories: ICategory[];
+  selectedCategory: ICategory;
+  getCategoriesStatus: string;
+  getCategoriesSuccess: boolean;
+  getCategoriesError: boolean;
+  addCategoriesStatus: string;
+  addCategoriesSuccess: boolean;
+  addCategoriesError: boolean;
+  deleteCategoriesStatus: string;
+  deleteCategoriesSuccess: boolean;
+  deleteCategoriesError: boolean;
 };

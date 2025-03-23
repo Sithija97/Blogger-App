@@ -6,7 +6,7 @@ import { ICategory } from "../models";
 
 export const TopicSlider = () => {
   const { categories } = useAppSelector((state: RootState) => state.categories);
-  const topics = [{ _id: 1, name: "Explore topics" }, ...categories];
+  const topics = [{ _id: "1", name: "Explore topics" }, ...categories];
 
   const scrollRef = useRef<HTMLDivElement>(null);
 

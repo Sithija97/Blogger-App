@@ -6,8 +6,8 @@ import {
   getPosts,
   getPostsByUser,
   updatePost,
-} from "../services/post.service";
-import mongoose, { Mongoose, Schema } from "mongoose";
+} from "../services";
+import { Schema } from "mongoose";
 
 export const handleCreatePost = asyncHandler(
   async (req: Request, res: Response) => {

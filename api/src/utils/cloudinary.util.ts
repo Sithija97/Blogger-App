@@ -1,6 +1,8 @@
 import { format } from "date-fns";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
+// @ts-ignore - types are provided via custom declaration in src/types/multer-storage-cloudinary.d.ts
+import multerStorageCloudinary from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
+import type { Request } from "express";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -8,9 +10,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
+const storage = multerStorageCloudinary({
   cloudinary: cloudinary,
-  params: async (req, file) => {
+  params: async (req: Request, file: Express.Multer.File) => {
     const validFormats = ["jpg", "jpeg", "png"];
     const extension = file.originalname.split(".").pop()?.toLowerCase();
 
@@ -27,9 +29,9 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const postStorage = new CloudinaryStorage({
+const postStorage = multerStorageCloudinary({
   cloudinary: cloudinary,
-  params: async (req, file) => {
+  params: async (req: Request, file: Express.Multer.File) => {
     const validFormats = ["jpg", "jpeg", "png"];
     const extension = file.originalname.split(".").pop()?.toLowerCase();
 

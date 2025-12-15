@@ -25,9 +25,12 @@ export const handleGetPosts = asyncHandler(
 
 export const handleGetPostsByUser = asyncHandler(
   async (req: Request, res: Response) => {
-    const posts = await getPostsByUser(
-      (req.user as { _id: Schema.Types.ObjectId })._id
-    );
+    const user = req.user as { _id?: Schema.Types.ObjectId } | undefined;
+    if (!user || !user._id) {
+      res.status(401).json({ message: "Unauthorized or missing user ID." });
+      return;
+    }
+    const posts = await getPostsByUser(user._id);
     res.status(200).json(posts);
   }
 );

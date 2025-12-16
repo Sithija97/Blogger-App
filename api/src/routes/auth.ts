@@ -1,5 +1,4 @@
 import express from "express";
-
 import { validate } from "../middleware";
 import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
@@ -22,9 +21,7 @@ authRoutes
 authRoutes.route("/login").post(validate(Schemas.user.login), handleLogin);
 authRoutes.route("/logout").post(handleLogout);
 authRoutes.route("/check").get(handleCheckCookie);
-authRoutes
-  .route("/profile")
-  .get(authMiddleware.verifyToken, handleGetUserById);
+authRoutes.route("/profile").get(authMiddleware.verifyToken, handleGetUserById);
 authRoutes
   .route("/change-password")
   .put(

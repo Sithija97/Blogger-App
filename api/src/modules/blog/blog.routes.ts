@@ -2,14 +2,14 @@ import express from "express";
 import authMiddleware from "../../middleware/auth.middleware";
 import upload from "../../middleware/image.middleware";
 import { validate } from "../../middleware/validation.middleware";
-import { postSchema } from "./post.schema";
+import { postSchema } from "./blog.schema";
 import {
   handleCreatePost,
   handleDeletePost,
   handleGetAllPosts,
   handleGetPostsByUser,
   handleUpdatePost,
-} from "./post.controller";
+} from "./blog.controller";
 
 const router = express.Router();
 
@@ -23,9 +23,7 @@ router
   )
   .get(handleGetAllPosts);
 
-router
-  .route("/by-user")
-  .get(authMiddleware.verifyToken, handleGetPostsByUser);
+router.route("/by-user").get(authMiddleware.verifyToken, handleGetPostsByUser);
 
 router
   .route("/:postId")
@@ -40,5 +38,3 @@ router
 export function registerPostModule(app: import("express").Express) {
   app.use("/api/post", router);
 }
-
-

@@ -24,9 +24,9 @@ export const createCategory = async (req: Request) => {
   }
 };
 
+/*
 export const deleteCategory = async () => {
   try {
   } catch (error) {}
 };
-
-
+*/

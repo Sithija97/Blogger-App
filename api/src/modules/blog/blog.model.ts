@@ -1,9 +1,9 @@
 import { Document, model, Schema } from "mongoose";
-import { IPost } from "../../interfaces";
+import { IBlog } from "../../interfaces";
 
-export interface IPostModel extends IPost, Document {}
+export interface IBlogModel extends IBlog, Document {}
 
-const PostSchema = new Schema<IPostModel>(
+const BlogSchema = new Schema<IBlogModel>(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
@@ -13,7 +13,5 @@ const PostSchema = new Schema<IPostModel>(
   { timestamps: true, versionKey: false }
 );
 
-const Post = model<IPostModel>("Post", PostSchema);
-export default Post;
-
-
+const Blog = model<IBlogModel>("Blog", BlogSchema);
+export default Blog;

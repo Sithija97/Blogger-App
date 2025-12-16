@@ -1,7 +1,6 @@
 import express from "express";
 import {
   handleCreateCategory,
-  handleDeleteCategory,
   handleGetAllCategories,
 } from "./category.controller";
 import authMiddleware from "../../middleware/auth.middleware";
@@ -16,11 +15,9 @@ router
     authMiddleware.verifyToken,
     authMiddleware.authorizeRole(USER_ROLES.ADMIN),
     handleCreateCategory
-  )
-  .delete(handleDeleteCategory);
+  );
+// .delete(handleDeleteCategory);
 
 export function registerCategoryModule(app: import("express").Express) {
   app.use("/api/category", router);
 }
-
-

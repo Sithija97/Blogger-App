@@ -4,11 +4,11 @@ import upload from "../../middleware/image.middleware";
 import { validate } from "../../middleware/validation.middleware";
 import { postSchema } from "./blog.schema";
 import {
-  handleCreatePost,
-  handleDeletePost,
-  handleGetAllPosts,
-  handleGetPostsByUser,
-  handleUpdatePost,
+  handleCreateBlog,
+  handleDeleteBlog,
+  handleGetAllBlogs,
+  handleGetBlogsByUser,
+  handleUpdateBlog,
 } from "./blog.controller";
 
 const router = express.Router();
@@ -19,11 +19,11 @@ router
     authMiddleware.verifyToken,
     upload.postImgUpload.single("image"),
     validate(postSchema),
-    handleCreatePost
+    handleCreateBlog
   )
-  .get(handleGetAllPosts);
+  .get(handleGetAllBlogs);
 
-router.route("/by-user").get(authMiddleware.verifyToken, handleGetPostsByUser);
+router.route("/by-user").get(authMiddleware.verifyToken, handleGetBlogsByUser);
 
 router
   .route("/:postId")
@@ -31,9 +31,9 @@ router
     authMiddleware.verifyToken,
     upload.postImgUpload.single("image"),
     validate(postSchema),
-    handleUpdatePost
+    handleUpdateBlog
   )
-  .delete(authMiddleware.verifyToken, handleDeletePost);
+  .delete(authMiddleware.verifyToken, handleDeleteBlog);
 
 export function registerPostModule(app: import("express").Express) {
   app.use("/api/post", router);

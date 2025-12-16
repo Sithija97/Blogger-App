@@ -4,7 +4,6 @@ import { USER_ROLES } from "../enums";
 import {
   handleGetAllCategories,
   handleCreateCategory,
-  handleDeleteCategory,
 } from "../modules/category";
 
 const categoryRoutes = express.Router();
@@ -16,7 +15,7 @@ categoryRoutes
     authMiddleware.verifyToken,
     authMiddleware.authorizeRole(USER_ROLES.ADMIN),
     handleCreateCategory
-  )
-  .delete(handleDeleteCategory);
+  );
+// .delete(handleDeleteCategory);
 
 export default categoryRoutes;

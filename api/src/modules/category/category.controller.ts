@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import {
-  createCategory,
-  deleteCategory,
-  getAllCategories,
-} from "./category.service";
+import { createCategory, getAllCategories } from "./category.service";
 
 export const handleGetAllCategories = asyncHandler(
   async (req: Request, res: Response) => {
@@ -20,11 +16,11 @@ export const handleCreateCategory = asyncHandler(
   }
 );
 
+/*
 export const handleDeleteCategory = asyncHandler(
   async (req: Request, res: Response) => {
     const response = await deleteCategory();
     res.status(200).json(response);
   }
 );
-
-
+*/

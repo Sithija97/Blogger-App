@@ -1,8 +1,8 @@
 import express from "express";
 import {
-  handleAddCategory,
+  handleCreateCategory,
   handleDeleteCategory,
-  handleGetCategories,
+  handleGetAllCategories,
 } from "./category.controller";
 import authMiddleware from "../../middleware/auth.middleware";
 import { USER_ROLES } from "../../enums";
@@ -11,11 +11,11 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(handleGetCategories)
+  .get(handleGetAllCategories)
   .post(
     authMiddleware.verifyToken,
     authMiddleware.authorizeRole(USER_ROLES.ADMIN),
-    handleAddCategory
+    handleCreateCategory
   )
   .delete(handleDeleteCategory);
 

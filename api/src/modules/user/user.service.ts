@@ -7,7 +7,7 @@ import { SECRET, TOKEN } from "../../config";
 import { Request } from "express";
 import { Types } from "mongoose";
 
-export const register = async (user: IUser): Promise<IUserModel> => {
+export const registerUser = async (user: IUser): Promise<IUserModel> => {
   const { username, email, password } = user;
 
   try {
@@ -23,7 +23,7 @@ export const register = async (user: IUser): Promise<IUserModel> => {
   }
 };
 
-export const login = async (credentials: {
+export const loginUser = async (credentials: {
   email: string;
   password: string;
 }) => {
@@ -51,7 +51,7 @@ export const login = async (credentials: {
   }
 };
 
-export const check = (req: Request) => {
+export const checkAuth = (req: Request) => {
   try {
     const token = req.cookies[TOKEN];
     if (!token) {
@@ -65,7 +65,7 @@ export const check = (req: Request) => {
   }
 };
 
-export const changePassword = async (
+export const changeUserPassword = async (
   req: Request,
   currentPassword: string,
   newPassword: string,
@@ -108,7 +108,7 @@ export const changePassword = async (
   }
 };
 
-export const changeAvatar = async (req: Request) => {
+export const changeUserAvatar = async (req: Request) => {
   try {
     const { user } = req;
     if (!req.file) throw new CustomError("No image file uploaded", 400);

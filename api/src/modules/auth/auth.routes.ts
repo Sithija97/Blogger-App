@@ -3,8 +3,8 @@ import {
   handleRegister,
   handleLogin,
   handleLogout,
-  checkCookie,
-  getUserById,
+  handleCheckCookie,
+  handleGetUserById,
   handleChangePassword,
   handleChangeAvatar,
 } from "./auth.controller";
@@ -22,8 +22,8 @@ const router = express.Router();
 router.route("/register").post(validate(createSchema), handleRegister);
 router.route("/login").post(validate(loginSchema), handleLogin);
 router.route("/logout").post(handleLogout);
-router.route("/check").get(checkCookie);
-router.route("/profile").get(authMiddleware.verifyToken, getUserById);
+router.route("/check").get(handleCheckCookie);
+router.route("/profile").get(authMiddleware.verifyToken, handleGetUserById);
 router
   .route("/change-password")
   .put(

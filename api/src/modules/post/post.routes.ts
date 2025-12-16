@@ -6,7 +6,7 @@ import { postSchema } from "./post.schema";
 import {
   handleCreatePost,
   handleDeletePost,
-  handleGetPosts,
+  handleGetAllPosts,
   handleGetPostsByUser,
   handleUpdatePost,
 } from "./post.controller";
@@ -21,7 +21,7 @@ router
     validate(postSchema),
     handleCreatePost
   )
-  .get(handleGetPosts);
+  .get(handleGetAllPosts);
 
 router
   .route("/by-user")

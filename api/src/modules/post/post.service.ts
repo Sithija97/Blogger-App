@@ -15,7 +15,7 @@ export const createPost = async (req: Request) => {
   }
 };
 
-export const getPosts = async (): Promise<IPostModel[]> => {
+export const getAllPosts = async (): Promise<IPostModel[]> => {
   try {
     const posts = await Post.find()
       .populate({ path: "user", select: "-password" })

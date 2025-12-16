@@ -5,8 +5,8 @@ import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
 import { Schemas } from "../schemas";
 import {
-  checkCookie,
-  getUserById,
+  handleCheckCookie,
+  handleGetUserById,
   handleChangeAvatar,
   handleChangePassword,
   handleLogin,
@@ -21,8 +21,10 @@ authRoutes
   .post(validate(Schemas.user.create), handleRegister);
 authRoutes.route("/login").post(validate(Schemas.user.login), handleLogin);
 authRoutes.route("/logout").post(handleLogout);
-authRoutes.route("/check").get(checkCookie);
-authRoutes.route("/profile").get(authMiddleware.verifyToken, getUserById);
+authRoutes.route("/check").get(handleCheckCookie);
+authRoutes
+  .route("/profile")
+  .get(authMiddleware.verifyToken, handleGetUserById);
 authRoutes
   .route("/change-password")
   .put(

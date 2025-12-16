@@ -6,7 +6,7 @@ import { validate } from "../middleware";
 import { Schemas } from "../schemas";
 import {
   handleCreatePost,
-  handleGetPosts,
+  handleGetAllPosts,
   handleGetPostsByUser,
   handleUpdatePost,
   handleDeletePost,
@@ -22,7 +22,7 @@ postRoutes
     validate(Schemas.post.create),
     handleCreatePost
   )
-  .get(handleGetPosts);
+  .get(handleGetAllPosts);
 
 postRoutes
   .route("/by-user")

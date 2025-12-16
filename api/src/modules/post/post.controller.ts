@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 import {
   createPost,
   deletePost,
-  getPosts,
+  getAllPosts,
   getPostsByUser,
   updatePost,
 } from "./post.service";
@@ -16,9 +16,9 @@ export const handleCreatePost = asyncHandler(
   }
 );
 
-export const handleGetPosts = asyncHandler(
+export const handleGetAllPosts = asyncHandler(
   async (req: Request, res: Response) => {
-    const posts = await getPosts();
+    const posts = await getAllPosts();
     res.status(200).json(posts);
   }
 );

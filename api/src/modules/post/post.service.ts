@@ -1,8 +1,7 @@
 import { Request } from "express";
-import { IPostModel } from "../models";
-import Post from "../models/post";
-import mongoose, { Mongoose, Schema } from "mongoose";
-import CustomError from "../utils/error.util";
+import mongoose, { Schema } from "mongoose";
+import CustomError from "../../utils/error.util";
+import Post, { IPostModel } from "./post.model";
 
 export const createPost = async (req: Request) => {
   const { title, content, user } = req.body;
@@ -73,3 +72,5 @@ export const deletePost = async (postId: string): Promise<void> => {
     throw new Error("Unexpected error during deleting post.");
   }
 };
+
+

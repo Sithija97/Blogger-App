@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import { IUser } from "../interfaces";
-import User, { IUserModel } from "../models/user";
-import CustomError from "../utils/error.util";
+import { IUser } from "../../interfaces";
+import User, { IUserModel } from "./user.model";
+import CustomError from "../../utils/error.util";
 import jwt from "jsonwebtoken";
-import { SECRET, TOKEN } from "../config";
+import { SECRET, TOKEN } from "../../config";
 import { Request } from "express";
 import { Types } from "mongoose";
 
@@ -145,3 +145,5 @@ export const deleteUser = async (userId: Types.ObjectId) => {
     throw new Error("Unexpected error during deleting user.");
   }
 };
+
+

@@ -1,5 +1,5 @@
 import { Request } from "express";
-import Category from "../models/category";
+import Category from "./category.model";
 
 export const getCategories = async () => {
   try {
@@ -28,3 +28,5 @@ export const deleteCategory = async () => {
   try {
   } catch (error) {}
 };
+
+

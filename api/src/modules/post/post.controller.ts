@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
+import { Schema } from "mongoose";
 import {
   createPost,
   deletePost,
   getPosts,
   getPostsByUser,
   updatePost,
-} from "../services";
-import { Schema } from "mongoose";
+} from "./post.service";
 
 export const handleCreatePost = asyncHandler(
   async (req: Request, res: Response) => {
@@ -51,4 +51,4 @@ export const handleDeletePost = asyncHandler(
   }
 );
 
-export const getPost = asyncHandler(async (req: Request, res: Response) => {});
+

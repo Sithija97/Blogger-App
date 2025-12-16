@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import { TOKEN } from "../config";
-import { IUser } from "../interfaces";
+import { TOKEN } from "../../config";
+import { IUser } from "../../interfaces";
 import {
   changeAvatar,
   changePassword,
   check,
   login,
   register,
-} from "../services";
+} from "../user/user.service";
+import { Schema } from "mongoose";
 
 export const handleRegister = asyncHandler(
   async (req: Request, res: Response) => {
@@ -75,3 +76,5 @@ export const handleChangeAvatar = asyncHandler(
     res.status(200).json(result);
   }
 );
+
+

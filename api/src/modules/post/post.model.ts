@@ -1,5 +1,5 @@
 import { Document, model, Schema } from "mongoose";
-import { IPost } from "../interfaces";
+import { IPost } from "../../interfaces";
 
 export interface IPostModel extends IPost, Document {}
 
@@ -15,3 +15,5 @@ const PostSchema = new Schema<IPostModel>(
 
 const Post = model<IPostModel>("Post", PostSchema);
 export default Post;
+
+

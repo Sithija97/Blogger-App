@@ -11,8 +11,8 @@ import path from "path";
 import { logger } from "./middleware/logger";
 import { errorHandler } from "./middleware";
 import { conncetDB } from "./config/db";
-import { registerRoutes } from "./routes";
 import { CLIENT_URL, PORT } from "./config";
+import { registerRoutes } from "./routes";
 
 // Load environment variables
 dotenv.config();

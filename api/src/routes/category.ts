@@ -1,11 +1,11 @@
 import express from "express";
-import {
-  handleAddCategory,
-  handleDeleteCategory,
-  handleGetCategories,
-} from "../controllers/category";
 import authMiddleware from "../middleware/auth.middleware";
 import { USER_ROLES } from "../enums";
+import {
+  handleGetCategories,
+  handleAddCategory,
+  handleDeleteCategory,
+} from "../modules/category";
 
 const categoryRoutes = express.Router();
 

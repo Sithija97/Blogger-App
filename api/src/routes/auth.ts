@@ -1,17 +1,18 @@
 import express from "express";
-import {
-  handleRegister,
-  handleLogin,
-  handleLogout,
-  checkCookie,
-  getUserById,
-  handleChangePassword,
-  handleChangeAvatar,
-} from "../controllers";
+
 import { validate } from "../middleware";
-import { Schemas } from "../schemas";
 import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
+import { Schemas } from "../schemas";
+import {
+  checkCookie,
+  getUserById,
+  handleChangeAvatar,
+  handleChangePassword,
+  handleLogin,
+  handleLogout,
+  handleRegister,
+} from "../modules/auth";
 
 const authRoutes = express.Router();
 

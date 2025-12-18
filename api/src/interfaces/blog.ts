@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export interface IPost {
+export interface IBlog {
   title: string;
   content: string;
   image: string;

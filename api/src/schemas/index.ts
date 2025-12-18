@@ -7,7 +7,7 @@ export const Schemas = {
     login: loginSchema,
     changePassword: changePasswordSchema,
   },
-  post: {
+  blog: {
     create: postSchema,
   },
 };

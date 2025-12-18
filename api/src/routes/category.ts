@@ -1,22 +1,21 @@
 import express from "express";
-import {
-  handleAddCategory,
-  handleDeleteCategory,
-  handleGetCategories,
-} from "../controllers/category";
 import authMiddleware from "../middleware/auth.middleware";
 import { USER_ROLES } from "../enums";
+import {
+  handleGetAllCategories,
+  handleCreateCategory,
+} from "../modules/category";
 
 const categoryRoutes = express.Router();
 
 categoryRoutes
   .route("/")
-  .get(handleGetCategories)
+  .get(handleGetAllCategories)
   .post(
     authMiddleware.verifyToken,
     authMiddleware.authorizeRole(USER_ROLES.ADMIN),
-    handleAddCategory
-  )
-  .delete(handleDeleteCategory);
+    handleCreateCategory
+  );
+// .delete(handleDeleteCategory);
 
 export default categoryRoutes;

@@ -1,7 +1,7 @@
 import { Request } from "express";
-import Category from "../models/category";
+import Category from "./category.model";
 
-export const getCategories = async () => {
+export const getAllCategories = async () => {
   try {
     const categories = await Category.find();
     return categories;
@@ -24,7 +24,9 @@ export const createCategory = async (req: Request) => {
   }
 };
 
+/*
 export const deleteCategory = async () => {
   try {
   } catch (error) {}
 };
+*/

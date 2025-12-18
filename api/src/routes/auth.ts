@@ -1,17 +1,17 @@
 import express from "express";
-import {
-  handleRegister,
-  handleLogin,
-  handleLogout,
-  checkCookie,
-  getUserById,
-  handleChangePassword,
-  handleChangeAvatar,
-} from "../controllers";
 import { validate } from "../middleware";
-import { Schemas } from "../schemas";
 import authMiddleware from "../middleware/auth.middleware";
 import upload from "../middleware/image.middleware";
+import { Schemas } from "../schemas";
+import {
+  handleCheckCookie,
+  handleGetUserById,
+  handleChangeAvatar,
+  handleChangePassword,
+  handleLogin,
+  handleLogout,
+  handleRegister,
+} from "../modules/auth";
 
 const authRoutes = express.Router();
 
@@ -20,8 +20,8 @@ authRoutes
   .post(validate(Schemas.user.create), handleRegister);
 authRoutes.route("/login").post(validate(Schemas.user.login), handleLogin);
 authRoutes.route("/logout").post(handleLogout);
-authRoutes.route("/check").get(checkCookie);
-authRoutes.route("/profile").get(authMiddleware.verifyToken, getUserById);
+authRoutes.route("/check").get(handleCheckCookie);
+authRoutes.route("/profile").get(authMiddleware.verifyToken, handleGetUserById);
 authRoutes
   .route("/change-password")
   .put(

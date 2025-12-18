@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { SECRET, TOKEN } from "../config";
 import asyncHandler from "express-async-handler";
-import User, { IUserModel } from "../models/user";
+import { IUserModel } from "../modules/user";
+import User from "../modules/user/user.model";
 
 interface JwtPayload {
   id: string;

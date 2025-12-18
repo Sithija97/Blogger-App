@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
-import { Request, Response, NextFunction } from "express";
-import { deleteUser, getAllUsers } from "../services";
+import { Request, Response } from "express";
 import { Types } from "mongoose";
+import { deleteUser, getAllUsers } from "./user.service";
 
 export const handleGetUsers = asyncHandler(
   async (req: Request, res: Response) => {
@@ -17,3 +17,5 @@ export const handleDeleteUser = asyncHandler(
     res.status(200).json({ message: "User deleted successfully." });
   }
 );
+
+

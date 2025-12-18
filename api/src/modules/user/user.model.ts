@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { Document, model, Schema } from "mongoose";
-import { USER_ROLES } from "../enums";
-import { IUser } from "../interfaces";
+import { USER_ROLES } from "../../enums";
+import { IUser } from "../../interfaces";
 
 export interface IUserModel extends IUser, Document {}
 
@@ -34,3 +34,5 @@ UserSchema.pre("save", async function (next) {
 
 const User = model<IUserModel>("User", UserSchema);
 export default User;
+
+
